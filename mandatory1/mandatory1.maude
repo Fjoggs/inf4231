@@ -38,9 +38,12 @@ fmod LIST is
     sort List .
     op nil : -> List [ctor] .
     op __ : List Nat -> List [ctor] .
+    op concat : List List -> List .
+    op insertFront : Nat List -> List .
     op empty? : List -> Boolean .
     op last : List -> Nat .
     op rest : List -> List .
+    op reverse : List -> List .
 endfm
 
 fmod LIST-FUNCTIONS is
@@ -58,5 +61,8 @@ fmod LIST-FUNCTIONS is
     eq last(nil) = 0 .
     eq last(nil N) = N .
     eq last(L N N') = last(L N') .
+
+    eq reverse(nil) = nil .
+    eq reverse(nil N) = (nil N) .
 
 endfm
