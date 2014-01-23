@@ -53,6 +53,7 @@ fmod LIST-FUNCTIONS is
 
     eq rest(nil) = nil .
     eq rest(nil N) = nil .
+    eq rest(L N N') = rest (L N) N' .
 
     eq last(nil) = 0 .
     eq last(nil N) = N .
