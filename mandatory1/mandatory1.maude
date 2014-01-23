@@ -1,0 +1,61 @@
+fmod NAT-MULT is
+    sort Nat .
+    op 0 : -> Nat [ctor] .
+    op s : Nat -> Nat [ctor] .
+    op _+_ : Nat Nat -> Nat [prec 33] .
+    op _*_ : Nat Nat -> Nat [prec 31] .
+
+    vars M N : Nat .
+
+    eq 0 + M = M .
+    eq s(M) + N = s(M + N) .
+    eq 0 * M = 0 .
+    eq s(M) * N = N + M * N .
+endfm
+
+fmod NAT-MONUS is
+    including NAT-MULT .
+    op _monus_ : Nat Nat -> Nat [ctor] .
+
+    vars M N : Nat .
+
+    eq M monus 0 = M .
+    eq 0 monus N = 0 .
+    eq s(M) monus s(N) = (M monus N) .
+endfm
+
+fmod BOOLEAN is
+    sort Boolean .
+    ops true false : -> Boolean [ctor] .
+    op not_ : Boolean -> Boolean .
+    ops _and_ _or_ : Boolean Boolean -> Boolean .
+endfm
+
+
+fmod LIST is
+    including NAT-MULT .
+    including BOOLEAN .
+    sort List .
+    op nil : -> List [ctor] .
+    op __ : List Nat -> List [ctor] .
+    op empty? : List -> Boolean .
+    op last : List -> Nat .
+    op rest : List -> List .
+endfm
+
+fmod LIST-FUNCTIONS is
+    including LIST .
+    vars N N' : Nat .
+    vars L L' : List .
+
+    eq empty?(nil) = true .
+    eq empty?(L) = false .
+
+    eq rest(nil) = nil .
+    eq rest(nil N) = nil .
+
+    eq last(nil) = 0 .
+    eq last(nil N) = N .
+    eq last(L N N') = last(L N') .
+
+endfm
