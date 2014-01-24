@@ -82,7 +82,7 @@ fmod BINTREE-NAT1 is
     including NAT-MULT .
     including LIST .
     including LIST-FUNCTIONS .
-sort BinTree .
+    sort BinTree .
     op niltree : -> BinTree [ctor] .
     op bintree : BinTree Nat BinTree -> BinTree [ctor] .
     ops preorder inorder postorder : BinTree -> List . *** Traverse the tree
@@ -90,25 +90,29 @@ sort BinTree .
     op isSearchTree : BinTree -> Boolean .
     op reverse : BinTree -> BinTree .
 
-    vars BT BT’ : BinTree .
-    vars N N’ : Nat .
+    vars BT BT' : BinTree .
+    vars N N' : Nat .
 
     eq preorder(niltree) = nil .
     *** Root first, then left, then right subtrees.
-    eq preorder(bintree(BT, N, BT’)) = 
-    insertFront(N, concat(preorder(BT), preorder(BT’))) .
+    eq preorder(bintree(BT, N, BT')) = 
+    insertFront(N, concat(preorder(BT), preorder(BT'))) .
 
     eq size(niltree) = 0 .
-    eq size(bintree(BT, N, BT’)) = s(size(BT) + size(BT’)) .
+    eq size(bintree(BT, N, BT')) = s(size(BT) + size(BT')) .
 
     eq inorder(niltree) = nil .
     *** Left first, then root, then right subtrees.
     eq inorder(bintree(BT, N, BT')) = 
-    insertFront
+    concat((inorder(BT) N), inorder(BT')) .
 
-    eq postorder = .
+    *** Left first, then right subtrees then root.
+    eq postorder(niltree) = nil .
+    eq postorder(bintree(BT, N, BT')) = 
+    concat(postorder(BT), (postorder(BT') N)) .
+    
+    eq weight(niltree) = 0 .
+    eq weight(bintree(BT, N, BT')) = N + (weight(BT) + weight(BT')) .
 
-    eq weight = .
-
-    eq reverse = .
+    ***eq reverse = .
 endfm
