@@ -114,5 +114,7 @@ fmod BINTREE-NAT1 is
     eq weight(niltree) = 0 .
     eq weight(bintree(BT, N, BT')) = N + (weight(BT) + weight(BT')) .
 
-    ***eq reverse = .
+    eq reverse(niltree) = niltree .
+    eq reverse(bintree(BT, N, BT')) = 
+    bintree(reverse(BT'), N, reverse(BT)) .
 endfm
