@@ -94,14 +94,17 @@ sort BinTree .
     vars N N’ : Nat .
 
     eq preorder(niltree) = nil .
-    *** Root first, then left and right subtrees.
+    *** Root first, then left, then right subtrees.
     eq preorder(bintree(BT, N, BT’)) = 
     insertFront(N, concat(preorder(BT), preorder(BT’))) .
 
     eq size(niltree) = 0 .
     eq size(bintree(BT, N, BT’)) = s(size(BT) + size(BT’)) .
 
-    eq inorder = .
+    eq inorder(niltree) = nil .
+    *** Left first, then root, then right subtrees.
+    eq inorder(bintree(BT, N, BT')) = 
+    insertFront
 
     eq postorder = .
 
