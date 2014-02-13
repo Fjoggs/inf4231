@@ -1,0 +1,17 @@
+in assoc-list-public.maude .
+in list-public.maude .
+
+fmod ASSOC-LIST-INT-EXTENDED is
+    protecting ASSOC-LIST-INT .
+    *** ops first last : NeList -> Int .
+    *** op rest : NeList -> List .
+
+    vars M N : Int .
+    var L : NeList .
+
+    eq last(N) = N .
+    eq last(L N) = N .
+
+    eq rest(nil N) = nil .
+    eq rest(
+endfm

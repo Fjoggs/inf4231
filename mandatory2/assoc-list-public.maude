@@ -1,0 +1,60 @@
+fmod ASSOC-LIST-INT is 
+  protecting INT .
+  
+  sorts List NeList .
+  subsorts Int < NeList < List .  
+
+  *** Constructors, this time only assoc:
+  op nil : -> List [ctor] .
+  op __ : List List -> List [assoc ctor] .
+  op __ : NeList NeList -> NeList [assoc ctor] .
+  op length : List -> Int .
+  ops first last : NeList -> Int .
+  op empty? : List -> Bool .
+  op rest : NeList -> List .
+  op reverse : List -> List .
+  op _occursIn_ : Int List -> Bool .
+
+  *** More specific for lists on totally ordered domains:
+  op max : NeList -> Int .
+  op isSorted : List -> Bool .
+
+  vars I J : Int .
+  var L : List .
+  var NEL : NeList .
+
+  eq L nil = L .
+  eq nil L = L .
+  eq length(nil) = 0 .
+  eq length(I) = 1 .
+  eq length(I NEL) = 1 + length(NEL) .
+  eq first(I) = I .
+  eq first(I NEL) = I .
+  eq empty?(L) = L == nil .
+  eq reverse(nil) = nil .
+  eq reverse(I) = I .
+  eq reverse(I NEL) = reverse(NEL) I .
+  eq I occursIn nil = false .
+  eq I occursIn J = I == J .
+  eq I occursIn J NEL = (I == J) or (I occursIn NEL) .
+  eq max(I) = I .
+  eq max(I NEL) = if I > max(NEL) then I else max(NEL) fi .
+  eq isSorted(nil) = true .
+  eq isSorted(I) = true .
+  eq isSorted(I J) = I <= J .
+  eq isSorted(I J NEL) = I <= J and isSorted(J NEL) .
+
+  --- definitions for 'last' and 'rest' should come here!
+endfm
+
+red last(nil 33 55 77) .
+red last(34) .
+red last(56 nil 57 99 2 nil) .
+red last(56 57 99 2) .
+
+red rest(34) .
+red rest(99 88) .
+red rest(nil 12) .
+red rest(56 nil 57 99 2 nil) .
+red rest(56 57 99 2) .
+

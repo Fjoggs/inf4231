@@ -1,0 +1,76 @@
+fmod LIST-INT is 
+  protecting INT .
+  
+  sorts List NeList .
+  subsorts Int < NeList < List .  
+
+  *** Constructors
+  op nil : -> List [ctor] .
+  op __ : List List -> List [assoc id: nil ctor] .
+  op __ : NeList NeList -> NeList [assoc id: nil ctor] .
+  op length : List -> Int .
+  ops first last : NeList -> Int .
+  op empty? : List -> Bool .
+  op rest : NeList -> List .
+  op reverse : List -> List .
+  op _occursIn_ : Int List -> Bool .
+  op max : NeList -> Int .
+  op isSorted : List -> Bool .
+
+  vars I J : Int .
+  vars L L' L'' : List .  var NEL : NeList .
+
+  eq length(nil) = 0 .
+  eq length(I L) = 1 + length(L) .
+  eq last(L I) = I .
+  eq empty?(L) = L == nil .
+  eq rest(I L) = L .
+  eq I occursIn nil = false .
+  eq I occursIn J L = (I == J) or (I occursIn L) .
+  *** write your definitions here ... 
+
+  *** Oblig1:
+  op _>lex_ : List List -> Bool .
+  *** ... and here
+endfm
+
+red first(nil) .        *** should give error, ie. first(nil) of kind [List]
+
+red first(200 2) .      *** 200
+
+red first(1 2 3 4 5) .  *** 1
+
+red first(12) .         *** 12
+
+red reverse(nil) .      *** nil
+
+red reverse(200 2) .    *** give back 2 200
+
+red reverse(12) .       *** 12
+
+red reverse(1 2 3 4 5) .   *** 5 4 3 2 1
+
+red max(12) .           *** 12
+
+red max(10 2 2003) .    *** 2003
+
+red max(1 2 3 4 5) .    *** 5 
+
+red max(5 7 6) .        *** 7
+
+red isSorted(nil) .     *** true
+
+red isSorted(2003) .    *** true
+
+red isSorted(5 7 6) .   *** false 
+
+red isSorted(1 2 3 4 5) . *** true
+
+red 1 2 3 4 >lex 1 2 3 .   *** true
+
+red 2 3 4 >lex 1 2 3 4 .  *** true
+
+red 1 >lex 1 0 .          *** false 
+
+red 2 5 6 >lex 2 4 678 12 .  *** true   
+
