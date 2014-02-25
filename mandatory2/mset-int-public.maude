@@ -1,0 +1,61 @@
+*** Denne kan fylles ut til bruk i obligatorisk oppgave 2.
+
+fmod MSET-INT is
+  protecting INT .
+
+  sorts Mset NeMset .                   *** Multisets and non-empty multisets
+  subsorts Int < NeMset < Mset .        *** A number is also a multiset
+  
+  op none : -> Mset [ctor] .            *** Empty multiset
+  op __ : Mset Mset -> Mset [ctor assoc comm id: none] .
+  op __ : NeMset NeMset -> NeMset [ctor assoc comm id: none] .
+
+  op size : Mset -> Int .               *** No of elements in a multiset
+  op mult : Int Mset -> Int .           *** Multiplicity of an element
+  op delete : Int Mset -> Mset .        *** Remove ONE occurrence of element
+  op _in_ : Int Mset -> Bool .          *** Is element in multiset?
+  op max : NeMset -> Int .              *** Largest element
+  op empty? : Mset -> Bool .            *** Empty?
+  op _>mul_ : Mset Mset -> Bool .       *** Multiset comparison
+
+  vars I J : Int .
+  var MS : Mset .  vars NEMS NEMS' : NeMset .
+
+  eq size(none) = 0 .
+  eq size(I MS) = 1 + size(MS) .
+  eq delete(I, I MS) = MS .
+  ceq delete(I, MS) = MS if not I in MS .
+  eq I in MS = mult(I, MS) > 0 .
+  *** her kommer din definisjon av oblig-funksjonene!
+endfm
+
+                          
+red mult(4, none) .                       *** should give 0
+
+red mult(4, 1 2 3 4 5 6 3 4 5 12 44 4) .  *** should give 3
+
+red mult(7, 1 2 3 4 5 6 8 9)  .           *** should give 0
+
+red mult(1, 5 7 3 1 8) .                  *** should give 1
+
+red max(1 2 3 4 5 6 3 4 5 12 44 4) .      *** should give 44
+
+red max(345) .                            *** should give 345
+
+red max(4 5 6 7 1 2 3 4 5 6 7 3) .        *** should give 7
+
+red empty?(none) .                        *** should give true
+
+red empty?(345) .                         *** should give false       
+
+red empty?(2 1 3 1) .                     *** should give false
+
+red none >mul none .                      *** should give false
+
+red 1969 >mul none .                      *** should give true
+
+red 1 2 3 4 5 1 2 3 >mul 1 3 5 6 .        *** should give false 
+
+red 3 4 7 7 >mul 1 2 2 0 4 1 -3 7 7 .     *** should give true
+
+red 3 4 7 7 >mul 1 2 2 0 4 4 1 -3 7 7 .   *** should give false

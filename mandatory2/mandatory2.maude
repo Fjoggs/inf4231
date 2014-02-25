@@ -1,6 +1,8 @@
 in assoc-list-public.maude .
 in list-public.maude .
 
+*** Excercise 79 begins
+
 fmod ASSOC-LIST-INT-EXTENDED is
     protecting ASSOC-LIST-INT .
     *** ops first last : NeList -> Int .
@@ -13,5 +15,33 @@ fmod ASSOC-LIST-INT-EXTENDED is
     eq last(L N) = N .
 
     eq rest(nil N) = nil .
-    eq rest(
+    eq rest(N L) = L .
+endfm
+
+*** Excercise 79 ends
+*** Excercise 80 begins
+
+fmod LIST-INT-EXTENDED is
+    protecting LIST-INT .
+    *** ops first last : NeList -> Int .
+    *** op reverse : List -> List .
+    *** op max : NeList -> Int .
+    *** op isSorted: List -> Bool .
+
+    vars M N : Int .
+    var L : NeList .
+
+    eq first(N) = N .
+    eq first(N L) = N .
+
+    eq reverse(nil) = nil .
+    eq reverse(N) = N .
+    eq reverse(N L) = reverse(L) N .
+
+    eq max(N) = N .
+    eq max(N L) = if N > max(L) then N else max(L) fi .
+
+    eq isSorted(nil) = true .
+    eq isSorted(N nil) = true .
+    eq isSorted(N L) = if N < max(L) then isSorted(L) else false fi .
 endfm
