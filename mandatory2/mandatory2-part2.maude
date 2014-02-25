@@ -1,0 +1,48 @@
+ *** Excercise 85 begins
+
+fmod MSET-INT-EXTENDED is
+    protecting MSET-INT .
+    *** op mult : Int Mset -> Nat . *** Multiplicity of an element
+    *** op max : NeMset -> Int . *** Largest element
+    *** op empty? : Mset -> Bool . *** Empty?
+    *** op _>mul_ : Mset Mset -> Bool . *** Multiset comparison  
+    *** I'm assuming that >mul should work the same as >lex
+
+    vars M N : Int .
+    var MS MS' : Mset .
+    vars NEMS : NeMset .
+
+    eq mult(N, none) = 0 .
+    eq mult(N, M MS) = if N == M then 1 + mult(N, MS) else 0 + mult(N, MS) fi .
+
+    eq max(N) = N .
+    eq max(N NEMS) = if N > max(NEMS) then N else max(NEMS) fi .
+
+    eq empty?(none) = true .
+    eq empty?(NEMS) = false .
+
+    eq N none >mul M MS = false . *** Used when list are not of equal lengths
+    eq N MS >mul M none = true . *** Used when list are not of equal lengths
+    eq N none >mul M none = if N == M then false else true fi . *** If two lists are identical
+    eq N MS >mul none = true .
+    eq none >mul N MS = false .
+    eq N MS >mul M MS' = if N > M then true else if N == M then MS >mul MS' else false fi fi .
+endfm
+
+*** Excercise 85 ends
+*** Excercise 86 begins
+*** Commented out so that the file compiles correctly
+***fmod MSET-OBJMSG is
+***    protecting OBJ .
+***    protecting MSG .
+***    protecting MSET-INT .
+
+***    sort Mset-ObjMsg NeMset-ObjMsg .
+***    subsorts Obj Msg < NeMset-ObjMsg < Mset-ObjMsg .
+
+***    op none : -> Mset-ObjMsg [ctor] .
+***    op __ : Mset-ObjMsg Mset-ObjMsg -> Mset-ObjMsg [ctor] .
+***    op __ : NeMset-ObjMsg NeMset-ObjMsg -> NeMset-ObjMsg [ctor] .
+***endfm
+
+*** Excercise 86 ends

@@ -1,5 +1,6 @@
 in assoc-list-public.maude .
 in list-public.maude .
+in mset-int-public.maude .
 
 *** Excercise 79 begins
 
@@ -29,7 +30,7 @@ fmod LIST-INT-EXTENDED is
     *** op isSorted: List -> Bool .
 
     vars M N : Int .
-    var L : NeList .
+    var L L' : NeList .
 
     eq first(N) = N .
     eq first(N L) = N .
@@ -44,4 +45,20 @@ fmod LIST-INT-EXTENDED is
     eq isSorted(nil) = true .
     eq isSorted(N nil) = true .
     eq isSorted(N L) = if N < max(L) then isSorted(L) else false fi .
+
+*** Excercise 80 ends
+*** Excercise 82 begins
+
+    op _>lex_ : List List -> Bool .
+
+    eq N nil >lex M L = false . *** Used when list are not of equal lengths
+    eq N L >lex M nil = true . *** Used when list are not of equal lengths
+    eq N nil >lex M nil = if N == M then false else true fi . *** If two lists are identical
+    eq N L >lex nil = true .
+    eq nil >lex N L = false .
+    eq N L >lex M L' = if N > M then true else if N == M then L >lex L' else false fi fi .
+
 endfm
+
+*** Excercise 82 ends
+*** Check part2 for the final Maude excercises

@@ -31,3 +31,10 @@ red isSorted(nil) .
 red isSorted(200 2) .
 red isSorted(1 2 3 4 5) .
 red isSorted(5 7 6) .
+
+*** Excercise 82
+red (1 2 3 4) >lex (1 2 3) .
+red (2 3 4) >lex (1 2 3 4) .
+red (1) >lex (1 0) .
+red (1 2 3) >lex (1 2 3) .
+red (2 5 6) >lex (2 4 678 12) .
