@@ -37,7 +37,8 @@ endfm
 ***    protecting MSG .
 ***    protecting MSET-INT .
 
-***    sort Mset-ObjMsg NeMset-ObjMsg .
+***    sorts Mset-ObjMsg NeMset-ObjMsg .
+***    sorts Obj Msg .
 ***    subsorts Obj Msg < NeMset-ObjMsg < Mset-ObjMsg .
 
 ***    op none : -> Mset-ObjMsg [ctor] .
