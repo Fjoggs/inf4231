@@ -1,4 +1,4 @@
-in mandatory2.maude .
+in mandatory2-part1.maude .
 
 *** Excercise 79
 red last(nil) .
@@ -38,3 +38,23 @@ red (2 3 4) >lex (1 2 3 4) .
 red (1) >lex (1 0) .
 red (1 2 3) >lex (1 2 3) .
 red (2 5 6) >lex (2 4 678 12) .
+
+in mandatory2-part2.maude .
+
+*** Excercise 85
+red mult(0, none) .
+red mult(2, 1 2 2 3 4 5 6 7 1 2) .
+
+*** red max(nil) .Nil is undefined for Int .
+red max(2) .
+red max(1 2 3 5 6 7 3 5 6 8) .
+
+red empty?(none) .
+red empty?(0) .
+red empty?(1 3 4 5 6) .
+
+red none >mul none .
+red none >mul (1 2 3 4) .
+red (1 2 3 4) >mul none .
+red (1 2 3 4) >mul (1 2 3 4) .
+red (2 3 5) >mul (3 5 2) .
