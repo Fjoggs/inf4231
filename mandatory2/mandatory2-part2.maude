@@ -31,19 +31,16 @@ endfm
 
 *** Excercise 85 ends
 *** Excercise 86 begins
-*** Commented out so that the file compiles correctly
-***fmod MSET-OBJMSG is
-***    protecting OBJ .
-***    protecting MSG .
-***    protecting MSET-INT .
+fmod MSET-OBJMSG is
+    protecting MSET-INT .
 
-***    sorts Mset-ObjMsg NeMset-ObjMsg .
-***    sorts Obj Msg .
-***    subsorts Obj Msg < NeMset-ObjMsg < Mset-ObjMsg .
+    sorts Mset-ObjMsg NeMset-ObjMsg .
+    sorts Obj Msg .
+    subsorts Obj Msg < NeMset-ObjMsg < Mset-ObjMsg .
 
-***    op none : -> Mset-ObjMsg [ctor] .
-***    op __ : Mset-ObjMsg Mset-ObjMsg -> Mset-ObjMsg [ctor] .
-***    op __ : NeMset-ObjMsg NeMset-ObjMsg -> NeMset-ObjMsg [ctor] .
-***endfm
+    op none : -> Mset-ObjMsg [ctor] .
+    op __ : Mset-ObjMsg Mset-ObjMsg -> Mset-ObjMsg [ctor] .
+    op __ : NeMset-ObjMsg NeMset-ObjMsg -> NeMset-ObjMsg [ctor] .
+endfm
 
 *** Excercise 86 ends
