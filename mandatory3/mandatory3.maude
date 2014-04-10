@@ -280,23 +280,28 @@ endom)
 --- an inital segment of our sentence.
 
 --- EXCERCISE 9
+--- 1
 ---(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
                     (S':StringList withSeqNo N':Nat) > .)
 
+--- 2
 ---(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
 ---                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
 
+--- 3
 ---(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
 ---                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) --
 ---                    (S''':StringList withSeqNo N''':Nat)> .)
 
-(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
-                    (S':StringList withSeqNo N':Nat) > .)
-                                                                                
-
+--- 4
 ---(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
----                    (S:StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
+---                    (S':StringList withSeqNo N':Nat) > .)
+                                                                                
+--- 5
+(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
+                    (S:StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
 
+--- 6
 ---(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
 ---                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) --
 ---                    (S''':StringList withSeqNo N''':Nat) > .)  
