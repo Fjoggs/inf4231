@@ -117,10 +117,10 @@ endfm)
   vars N N' N'' N''' : Nat .
   var NZ : NzNat .
   vars O O' : Oid .
-  var S S' : String .
+  vars S S' : String .
   var SL : StringList .
-  var WL WL' WL'' : windowList .
-  var X : Msg .
+  vars WL WL' WL'' : windowList .
+  var M : Msg .
   
   rl [start] :
      < O : Sender | msgsToSend : S ++ SL, currentSeqNo : 0, lastSent : 0 >
@@ -143,11 +143,11 @@ crl [sendLast] :
 
   
   crl [resendWindow] :
-     < O : Sender | receiver : O', window : WL -- X -- WL' >  
+     < O : Sender | receiver : O', window : WL -- M -- WL' >  
     =>
      < O : Sender | >
-     msg X from O to O' 
-     if X =/= empty .
+     msg M from O to O' 
+     if M =/= empty .
      
   rl [receiveCurrentAckNotLast] :
      (msg (ack withSeqNo N) from O' to O)
@@ -179,11 +179,12 @@ crl [sendLast] :
                    nbuffered : Nat .
   --- Note: the latter attribute is NOT a part of the protocol,
   ---       just added for analysis purposes.
-var XS : StringList .
+    var SL : StringList .
 
     op save : StringList windowList Nat -> StringList .
-    eq save(XS, empty, N') = XS .
-    eq save(XS, (S withSeqNo N) -- X, N') = if N <= N' then save((XS ++ S), X, N) else XS fi .
+
+    eq save(SL, empty, N') = SL .
+    eq save(SL, (S withSeqNo N) -- M, N') = if N <= N' then save((SL ++ S), M, N) else SL fi .
 
   --- send ack's, only when seqNo > 0:
   rl [sendAck] :
