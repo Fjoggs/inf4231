@@ -272,5 +272,9 @@ endom)
 (red "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" ++ "!!" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
 
 --- EXCERCISE 8
-(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : S:StringList > 
-    such that not((S:StringList erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende")) .)
+---(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : S:StringList > 
+---    such that not((S:StringList erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende")) .)
+--- The result of this search was.. nothing? I went to the bathroom, then I went to the kitchen
+--- to grab something to eat and drink, and it was still not done when I got back.
+--- This means that there's no message in our "tree" that the search can find that is not
+--- an inital segment of our sentence.
