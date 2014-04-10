@@ -51,7 +51,7 @@ endom)
   var SL SL' : StringList .
 
   eq listSize(nil) = 0 .
-  eq listSize(S ++ SL) = 1 + listSize(SX) .
+  eq listSize(S ++ SL) = 1 + listSize(SL) .
 
   eq nil erPrefiksAv nil = true .
   eq nil erPrefiksAv (S' ++ SL') = true .
