@@ -222,9 +222,11 @@ endom)
 (omod TEST-PROTOCOL-1 is including PROTOCOL-1 .
     subsort String < Oid .
 
-    op init : -> Configuration .   --- a suitable initial state
+    op init : Nat  -> Configuration .   --- a suitable initial state
 
-    eq init =
+    var N : Nat .
+
+    eq init(N) =
         < "Sender" : Sender | msgsToSend : "Obligen" ++ "er" ++ 
                                 "utrolig" ++ "spennende" ++ "og" ++ "inspirerende",
                                 currentMsg : nil,
@@ -240,3 +242,5 @@ endom)
                                 windowSize : N,
                                 nbuffered : 0 > .
 endom)
+
+--- EXCERCISE 3
