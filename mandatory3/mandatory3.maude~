@@ -59,6 +59,7 @@ endom)
     eq nil erPrefiksAv (S ++ SL) = true .
     eq (S ++ SL) erPrefiksAv nil = false .
     eq (S ++ SL) erPrefiksAv (S' ++ SL')  if S == S' then SL erPrefiksAv SL' else false fi .
+
 endfm)
 
 --- Here comes the actual protocol:
@@ -117,17 +118,36 @@ endfm)
         < O : Sender | > 
         if N < N' .
 
-    crl [sendLast] :
+    crl [sendLast] :      
+        < O : Sender | msgsToSend : nil, currentMsg : S, currentSeqNo : N, lastSent : N', windowSize : N'', nbuffered : N''', receiver : O', window : WL, ack : WL' >  
+        =>
+        < O : Sender | msgsToSend : nil, currentMsg : nil, window : WL' -- (S withSeqNo N'), ack : WL' -- (S withSeqNo N') , lastSent : N' + 1, nbuffered : N''' + 1 >
+        msg (S withSeqNo N') from O to O' 
+        if N'' > N'''  .
     
-
+    crl [resendWindow] :
+        < O : Sender | receiver : O', window : WL -- X -- WL' >
+        = >
+        < O : Sender | >
+        msg M from O to O' if M =/= empty .
   
     --- Receiver protocol:
     
     class Receiver | greatestSeqNoRcvd : Nat, 
                     sender : Oid, 
                     msgsRcvd : StringList .
+                    window : windowList,
+                    windowSize : Nat .
+                    nbuffered : Nat .
     --- Note: the latter attribute is NOT a part of the protocol,
     ---       just added for analysis purposes.
+
+    var SL : StringList .
+
+    op save : StringList windowList Nat -> StringList .
+    
+    eq save(SL, empty, N) = SL .
+    eq save(SL, (S withSeqNo N) -- M, N') = if N <= N' then save((SL ++ S), M, N) else SL fi .
 
     --- send ack's, only when seqNo > 0:
     rl [sendAck] :
@@ -150,6 +170,13 @@ endfm)
         =>
         < O : Receiver | >
         if N =/= s N' .
+
+    crl [rcvNewPacketFuture] :
+        (msg (S withSeqNo N) from O to O')
+        < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
+        =>
+        < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1 >
+        if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, N) .
 endom)
 
 --- Define some suitable initial states:
@@ -189,7 +216,7 @@ endom)
     eq windowSize(M WL) = 1 + windowSize(WL) .
 
     eq isPresent?(empty, N) = true .
-    eq isPresent?((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- X fi .
+    eq isPresent?((S withSeqNo N) -- WL, N') = if N == N' then false else isPresent?(WL, N') fi  .
 
     eq remove(empty, N) = empty .
     eq remove(empty -- WL, N) = empty .

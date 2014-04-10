@@ -159,9 +159,9 @@ endfm)
     --- receive NEXT new packet:
     rl [rcvNewPacket] :
         (msg (S withSeqNo s N) from O' to O)
-        < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL >
+        < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL, window : WL, nbuffered : N' >
         =>
-        < O : Receiver | greatestSeqNoRcvd : s N, msgsRcvd : SL ++ S > .
+        < O : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : size(remove(WL, N)) > .
 
     --- receive/ignore  a packet with an *old* sequence number:
     crl [rcvOldPacket] :
