@@ -278,3 +278,7 @@ endom)
 --- to grab something to eat and drink, and it was still not done when I got back.
 --- This means that there's no message in our "tree" that the search can find that is not
 --- an inital segment of our sentence.
+
+--- EXCERCISE 9
+(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | 
+                    window : (S:StringList withSeqNo N:Nat) -- (T:StringList withSeqNo M:Nat) > .)
