@@ -44,13 +44,11 @@ endom)
     subsort String < StringList .
     op nil : -> StringList [ctor] .
     op _++_ : StringList StringList -> StringList [ctor assoc id: nil] .
-
     op listSize : StringLst -> Nat .
-
     op _erPrefiksAv_ : StringList StringList .
 
-    var S S' : String .
-    var SL SL' : StringList .
+    vars S S' : String .
+    vars SL SL' : StringList .
 
     eq listSize(nil) = 0 .
     eq listSize(S ++ SL) = 1 + listSize(SL) .
