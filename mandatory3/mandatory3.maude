@@ -73,13 +73,13 @@ endfm)
     vars S S' : String .
     var WL : windowList .
 
-    op windowSize : windowList -> Nat .
+    op wSize : windowList -> Nat .
     op isPresent? : windowList Nat -> Bool .
     op remove : windowList Nat -> windowList .
     op add : windowList Msg -> windowList .
 
-    eq windowSize(empty) = 0 .
-    eq windowSize(M WL) = 1 + windowSize(WL) .
+    eq wSize(empty) = 0 .
+    eq wSize(M WL) = 1 + wSize(WL) .
 
     eq isPresent?(empty, N) = true .
     eq isPresent?((S withSeqNo N) -- WL, N') = if N == N' then false else isPresent?(WL, N') fi  .
@@ -153,13 +153,13 @@ crl [sendLast] :
      (msg (ack withSeqNo N) from O' to O)
      < O : Sender | currentSeqNo : N, ack : WL -- (S' withSeqNo N) -- WL', window : WL'', nbuffered : N'  >
     =>
-     < O : Sender | currentSeqNo : N + 1 + size(WL), ack : WL', window : WL', nbuffered : size(WL') > .
+     < O : Sender | currentSeqNo : N + 1 + wSize(WL), ack : WL', window : WL', nbuffered : wSize(WL') > .
 
   rl [receiveAckLast] :
      (msg (ack withSeqNo N) from O' to O)
      < O : Sender | currentSeqNo : N, msgsToSend : nil, ack : (S withSeqNo N) -- WL', window : WL'', nbuffered : N' >
     =>
-     < O : Sender | currentSeqNo : N + 1, currentMsg : nil, ack : WL', window : WL', nbuffered : size(WL')  > .
+     < O : Sender | currentSeqNo : N + 1, currentMsg : nil, ack : WL', window : WL', nbuffered : wSize(WL')  > .
 
   crl [rcvTooOldAck] :
       (msg (ack withSeqNo N) from O' to O)
@@ -197,7 +197,7 @@ var XS : StringList .
      (msg (S withSeqNo s N) from O' to O)
      < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL, window : WL, nbuffered : N' >
     =>
-     < O : Receiver | greatestSeqNoRcvd : (size2(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : size(remove(WL, N)) > .
+     < O : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : wSize(remove(WL, N)) > .
 
   crl [rcvNewPacketFuture] :
      (msg (S withSeqNo N) from O' to O)
