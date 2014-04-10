@@ -220,29 +220,29 @@ endom)
 
 --- Define some suitable initial states:
 (omod TEST-PROTOCOL-1 is including PROTOCOL-1 .
-  subsort String < Oid .
+    subsort String < Oid .
 
-  op init : Nat -> Configuration .   --- a suitable initial state
+    op init : Nat -> Configuration .   --- a suitable initial state
+
     var N : Nat .
 
----EXECISES 1.2
 
-eq init(N) =
-       < "Sender" : Sender | msgsToSend : "Obligen" ++ "er" ++ 
-                                          "utrolig" ++ "spennende" ++ "og" ++ "inspirerende",
-                             currentMsg : nil,
-                             currentSeqNo : 0,
-                             receiver : "Receiver", 
-                             window : empty,
-                             windowSize : N,
-                             nbuffered : 0,
-                             ack : empty,
-                             lastSent : 0 >
-       < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
-                                 sender : "Sender",
-                                 window : empty,
-                                 windowSize : N,
-                                 nbuffered : 0 > .
+    eq init(N) =
+        < "Sender" : Sender | msgsToSend : "Obligen" ++ "er" ++ 
+                                "utrolig" ++ "spennende" ++ "og" ++ "inspirerende",
+                                currentMsg : nil,
+                                currentSeqNo : 0,
+                                receiver : "Receiver", 
+                                window : empty,
+                                windowSize : N,
+                                nbuffered : 0,
+                                ack : empty,
+                                lastSent : 0 >
+        < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
+                                    sender : "Sender",
+                                    window : empty,
+                                    windowSize : N,
+                                    nbuffered : 0 > .
 endom)
 
 --- EXCERCISE 3
