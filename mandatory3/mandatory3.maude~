@@ -163,50 +163,48 @@ endfm)
   
     --- Receiver protocol:
     
-    class Receiver | greatestSeqNoRcvd : Nat, 
-                    sender : Oid, 
-                    msgsRcvd : StringList .
-                    window : windowList,
-                    windowSize : Nat .
-                    nbuffered : Nat .
-    --- Note: the latter attribute is NOT a part of the protocol,
-    ---       just added for analysis purposes.
-
-    var SL : StringList .
+  class Receiver | greatestSeqNoRcvd : Nat, 
+                   sender : Oid, 
+                   msgsRcvd : StringList,
+                   window : windowList,
+                   windowSize : Nat,
+                   nbuffered : Nat .
+  --- Note: the latter attribute is NOT a part of the protocol,
+  ---       just added for analysis purposes.
+var XS : StringList .
 
     op save : StringList windowList Nat -> StringList .
-    
-    eq save(SL, empty, N) = SL .
-    eq save(SL, (S withSeqNo N) -- M, N') = if N <= N' then save((SL ++ S), M, N) else SL fi .
+    eq save(XS, empty, N') = XS .
+    eq save(XS, (S withSeqNo N) -- X, N') = if N <= N' then save((XS ++ S), X, N) else XS fi .
 
-    --- send ack's, only when seqNo > 0:
-    rl [sendAck] :
-        < O : Receiver | greatestSeqNoRcvd : NZ, sender : O' >
-        =>
-        < O : Receiver | >
-        msg (ack withSeqNo NZ) from O to O' .
+  --- send ack's, only when seqNo > 0:
+  rl [sendAck] :
+     < O : Receiver | greatestSeqNoRcvd : NZ, sender : O' >
+    =>
+     < O : Receiver | >
+     msg (ack withSeqNo NZ) from O to O' .
    
-    --- receive NEXT new packet:
-    rl [rcvNewPacket] :
-        (msg (S withSeqNo s N) from O' to O)
-        < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL, window : WL, nbuffered : N' >
-        =>
-        < O : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : size(remove(WL, N)) > .
+  --- receive NEXT new packet:
+  rl [rcvNewPacket] :
+     (msg (S withSeqNo s N) from O' to O)
+     < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL, window : WL, nbuffered : N' >
+    =>
+     < O : Receiver | greatestSeqNoRcvd : (size2(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : size(remove(WL, N)) > .
 
-    --- receive/ignore  a packet with an *old* sequence number:
-    crl [rcvOldPacket] :
-        (msg (S withSeqNo N) from O' to O)
-        < O : Receiver | greatestSeqNoRcvd : N' >
-        =>
-        < O : Receiver | >
-        if N =/= s N' .
+  crl [rcvNewPacketFuture] :
+     (msg (S withSeqNo N) from O' to O)
+     < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
+    =>
+     < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1  >
+     if N > N' + 1 /\ N'' < N''' /\ in(WL, (N)) .
 
-    crl [rcvNewPacketFuture] :
-        (msg (S withSeqNo N) from O to O')
-        < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
-        =>
-        < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1 >
-        if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, N) .
+  --- receive/ignore  a packet with an *old* sequence number:
+  crl [rcvOldPacket] :
+      (msg (S withSeqNo N) from O' to O)
+      < O : Receiver | greatestSeqNoRcvd : N' >
+     =>
+      < O : Receiver | >
+     if N =/= s N' .
 endom)
 
 --- Define some suitable initial states:
