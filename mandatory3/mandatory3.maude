@@ -251,9 +251,11 @@ endom)
 
 --- EXCERCISE 4
 ---(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" > .)
+--- This took around 20 seconds or so.
 
 --- EXCERCISE 5
-(search [1] init(2) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" > .)
+---(search [1] init(2) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" > .)
+--- This took around 14 seconds.
 
 --- EXCERCISE 6
----(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : nil, window : ("utrolig" withSeqNo 3) > .) 
+(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : nil, window : ("utrolig" withSeqNo 3) > .) 
