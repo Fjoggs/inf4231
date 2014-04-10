@@ -94,75 +94,83 @@ endfm)
 
 --- Here comes the actual protocol:
 (omod PROTOCOL-1 is 
-    including STRING-LIST .
-    including MESSAGES .
-    including UNRELIABILITY .
-    including WINDOW-LIST .
+  including STRING-LIST .
+  including MESSAGES .
+  including UNRELIABILITY .
+  including WINDOW-LIST .
 
-    --- Sender protocol:
-    class Sender | msgsToSend : StringList,   --- messages not sent yet
-                currentMsg : StringList,   --- current string, or nil
-                currentSeqNo : Nat,        --- seq no to current msg 
-                receiver : Oid,            --- receiver address        
-                window : windowList,
-                windowSize : Nat,
-                nbuffered : Nat,
-                ack : windowList,
-                lastSent : Nat . 
 
-    vars N N' N'' N''' : Nat .
-    var NZ : NzNat .
-    vars O O' : Oid .
-    var S S' : String .
-    var SL : StringList .
-    var WL WL' WL'' : windowList .
-    var M : Msg .
 
-    rl [start] :
-        < O : Sender | msgsToSend : S ++ SL, currentSeqNo : 0, lastSent : 0 >
-        =>
-        < O : Sender | msgsToSend : SL, currentMsg : S, currentSeqNo : 1, lastSent : 1 > .
 
-    crl [sendCurrentMsg] :      
-        < O : Sender | currentMsg : S, currentSeqNo : N, receiver : O', lastSent : N', msgsToSend: S' ++ SL, windowSize : N'', nbuffered : N''', window : WL, ack : WL' >  
-        =>
-        < O : Sender | msgsToSend : SL, currentMsg : S', window : WL' -- (S withSeqNo N'), ack : WL' -- (S withSeqNo N'), lastSent : N' + 1, nbuffered : N''' + 1 >
-        msg (S withSeqNo N) from O to O' if N'' > N''' /\ S =/= nil .
+  --- Sender protocol:
+  class Sender | msgsToSend : StringList,   --- messages not sent yet
+                 currentMsg : StringList,   --- current string, or nil
+                 currentSeqNo : Nat,        --- seq no to current msg 
+                 receiver : Oid ,           --- receiver address        
+                 window : windowList,
+                 windowSize : Nat,
+                 nbuffered : Nat,
+                 ack : windowList,
+                 lastSent : Nat .
 
-    rl [receiveCurrentAckNotLast] :
-        (msg (ack withSeqNo N) from O' to O)
-        < O : Sender | currentSeqNo : N, ack : WL -- (S' withSeqNo N) -- WL', window : WL'', nbuffered : N' >
-        =>
-        < O : Sender | currentSeqNo : N + 1 + windowSize(WL), ack : WL', window : WL', nbuffered : windowSize(WL') > .
 
-    rl [receiveAckLast] :
-        (msg (ack withSeqNo N) from O' to O)
-        < O : Sender | currentSeqNo : N, msgsToSend : nil, ack : (S withSeqNo N) -- WL', window : WL'', nbuffered : N' >
-        =>
-        < O : Sender | currentSeqNo : N + 1, currentMsg : nil, ack : WL', window : WL', nbuffered : windowSize(WL') > .
-
-    crl [rcvTooOldAck] :
-        (msg (ack withSeqNo N) from O' to O)
-        < O : Sender | currentSeqNo : N' > 
-        =>
-        < O : Sender | > 
-        if N < N' .
-
-    crl [sendLast] :      
-        < O : Sender | msgsToSend : nil, currentMsg : S, currentSeqNo : N, lastSent : N', windowSize : N'', nbuffered : N''', receiver : O', window : WL, ack : WL' >  
-        =>
-        < O : Sender | msgsToSend : nil, currentMsg : nil, window : WL' -- (S withSeqNo N'), ack : WL' -- (S withSeqNo N') , lastSent : N' + 1, nbuffered : N''' + 1 >
-        msg (S withSeqNo N') from O to O' 
-        if N'' > N'''  .
-    
-    crl [resendWindow] :
-        < O : Sender | receiver : O', window : WL -- M -- WL' >
-        = >
-        < O : Sender | >
-        msg M from O to O' if M =/= empty .
+  vars N N' N'' N''' : Nat .
+  var NZ : NzNat .
+  vars O O' : Oid .
+  var S S' : String .
+  var SL : StringList .
+  var WL WL' WL'' : windowList .
+  var X : Msg .
   
-    --- Receiver protocol:
+  rl [start] :
+     < O : Sender | msgsToSend : S ++ SL, currentSeqNo : 0, lastSent : 0 >
+    =>
+     < O : Sender | msgsToSend : SL, currentMsg : S, currentSeqNo : 1, lastSent : 1 > .
+
+  crl [sendCurrentMsg] :      
+     < O : Sender | msgsToSend : S' ++ SL, currentMsg : S, currentSeqNo : N, lastSent : N', windowSize : N'', nbuffered : N''', receiver : O', window : WL, ack : WL' >  
+    =>
+     < O : Sender | msgsToSend : SL, currentMsg : S', window : WL' -- (S withSeqNo N'), ack : WL' -- (S withSeqNo N') , lastSent : N' + 1, nbuffered : N''' + 1 >
+     msg (S withSeqNo N') from O to O' 
+     if N'' > N''' /\ S =/= nil .
     
+crl [sendLast] :      
+     < O : Sender | msgsToSend : nil, currentMsg : S, currentSeqNo : N, lastSent : N', windowSize : N'', nbuffered : N''', receiver : O', window : WL, ack : WL' >  
+    =>
+     < O : Sender | msgsToSend : nil, currentMsg : nil, window : WL' -- (S withSeqNo N'), ack : WL' -- (S withSeqNo N') , lastSent : N' + 1, nbuffered : N''' + 1 >
+     msg (S withSeqNo N') from O to O' 
+     if N'' > N'''  .
+
+  
+  crl [resendWindow] :
+     < O : Sender | receiver : O', window : WL -- X -- WL' >  
+    =>
+     < O : Sender | >
+     msg X from O to O' 
+     if X =/= tom .
+     
+  rl [receiveCurrentAckNotLast] :
+     (msg (ack withSeqNo N) from O' to O)
+     < O : Sender | currentSeqNo : N, ack : WL -- (S' withSeqNo N) -- WL', window : WL'', nbuffered : N'  >
+    =>
+     < O : Sender | currentSeqNo : N + 1 + size(WL), ack : WL', window : WL', nbuffered : size(WL') > .
+
+  rl [receiveAckLast] :
+     (msg (ack withSeqNo N) from O' to O)
+     < O : Sender | currentSeqNo : N, msgsToSend : nil, ack : (S withSeqNo N) -- WL', window : WL'', nbuffered : N' >
+    =>
+     < O : Sender | currentSeqNo : N + 1, currentMsg : nil, ack : WL', window : WL', nbuffered : size(WL')  > .
+
+  crl [rcvTooOldAck] :
+      (msg (ack withSeqNo N) from O' to O)
+      < O : Sender | currentSeqNo : N' > 
+     =>
+      < O : Sender | > 
+     if N < N' .
+    
+  
+  --- Receiver protocol:
+ 
   class Receiver | greatestSeqNoRcvd : Nat, 
                    sender : Oid, 
                    msgsRcvd : StringList,
@@ -174,7 +182,7 @@ endfm)
 var XS : StringList .
 
     op save : StringList windowList Nat -> StringList .
-    eq save(XS, empty, N') = XS .
+    eq save(XS, tom, N') = XS .
     eq save(XS, (S withSeqNo N) -- X, N') = if N <= N' then save((XS ++ S), X, N) else XS fi .
 
   --- send ack's, only when seqNo > 0:
@@ -196,7 +204,7 @@ var XS : StringList .
      < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
     =>
      < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1  >
-     if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, (N)) .
+     if N > N' + 1 /\ N'' < N''' /\ in(WL, (N)) .
 
   --- receive/ignore  a packet with an *old* sequence number:
   crl [rcvOldPacket] :

@@ -196,7 +196,7 @@ var XS : StringList .
      < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
     =>
      < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1  >
-     if N > N' + 1 /\ N'' < N''' /\ in(WL, (N)) .
+     if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, (N)) .
 
   --- receive/ignore  a packet with an *old* sequence number:
   crl [rcvOldPacket] :
