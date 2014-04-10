@@ -60,6 +60,38 @@ endom)
 
 endfm)
 
+
+(fmod WINDOW-LIST is protecting MESSAGES .
+    sort windowList .
+    subsort Msg < windowList .
+    op empty : -> Msg [ctor] .
+    op _--_ : windowList windowList -> windowList [ctor assoc id: empty] .
+    op delete : windowList Nat -> windowList .
+
+    vars N N' : Nat .
+    vars M M' : Msg .
+    vars S S' : String .
+    var WL : windowList .
+
+    op windowSize : windowList -> Nat .
+    op isPresent? : windowList Nat -> Bool .
+    op remove : windowList Nat -> windowList .
+    op add : windowList Msg -> windowList .
+
+    eq windowSize(empty) = 0 .
+    eq windowSize(M WL) = 1 + windowSize(WL) .
+
+    eq isPresent?(empty, N) = true .
+    eq isPresent?((S withSeqNo N) -- WL, N') = if N == N' then false else isPresent?(WL, N') fi  .
+
+    eq remove(empty, N) = empty .
+    eq remove(empty -- WL, N) = empty .
+    eq remove((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- WL fi .
+
+    eq add(empty, M) = M .
+    eq add((S withSeqNo N) -- WL, (S' withSeqNo N')) = if N > N' then (S' withSeqNo N') -- (S withSeqNo N) -- WL else (S withSeqNo N) -- add(WL, (S' withSeqNo N')) fi .
+endfm)
+
 --- Here comes the actual protocol:
 (omod PROTOCOL-1 is 
     including STRING-LIST .
@@ -192,34 +224,3 @@ endom)
         < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
                                 sender : "Sender" > .
 endom)
-
-(fmod WINDOW-LIST is protecting MESSAGES .
-    sort windowList .
-    subsort Msg < windowList .
-    op empty : -> Msg [ctor] .
-    op _--_ : windowList windowList -> windowList [ctor assoc id: empty] .
-    op delete : windowList Nat -> windowList .
-
-    vars N N' : Nat .
-    vars M M' : Msg .
-    vars S S' : String .
-    var WL : windowList .
-
-    op windowSize : windowList -> Nat .
-    op isPresent? : windowList Nat -> Bool .
-    op remove : windowList Nat -> windowList .
-    op add : windowList Msg -> windowList .
-
-    eq windowSize(empty) = 0 .
-    eq windowSize(M WL) = 1 + windowSize(WL) .
-
-    eq isPresent?(empty, N) = true .
-    eq isPresent?((S withSeqNo N) -- WL, N') = if N == N' then false else isPresent?(WL, N') fi  .
-
-    eq remove(empty, N) = empty .
-    eq remove(empty -- WL, N) = empty .
-    eq remove((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- WL fi .
-
-    eq add(empty, M) = M .
-    eq add((S withSeqNo N) -- WL, (S' withSeqNo N')) = if N > N' then (S' withSeqNo N') -- (S withSeqNo N) -- WL else (S withSeqNo N) -- add(WL, (S' withSeqNo N')) fi .
-endfm)

@@ -156,7 +156,7 @@ endfm)
         if N'' > N'''  .
     
     crl [resendWindow] :
-        < O : Sender | receiver : O', window : WL -- X -- WL' >
+        < O : Sender | receiver : O', window : WL -- M -- WL' >
         = >
         < O : Sender | >
         msg M from O to O' if M =/= empty .
