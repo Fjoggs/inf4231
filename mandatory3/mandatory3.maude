@@ -59,6 +59,7 @@ endom)
     eq nil erPrefiksAv (S ++ SL) = true .
     eq (S ++ SL) erPrefiksAv nil = false .
     eq (S ++ SL) erPrefiksAv (S' ++ SL')  if S == S' then SL erPrefiksAv SL' else false fi .
+
 endfm)
 
 --- Here comes the actual protocol:
@@ -215,7 +216,7 @@ endom)
     eq windowSize(M WL) = 1 + windowSize(WL) .
 
     eq isPresent?(empty, N) = true .
-    eq isPresent?((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- X fi .
+    eq isPresent?((S withSeqNo N) -- WL, N') = if N == N' then false else isPresent?(WL, N') fi  .
 
     eq remove(empty, N) = empty .
     eq remove(empty -- WL, N) = empty .
