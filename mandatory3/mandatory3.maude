@@ -298,10 +298,10 @@ endom)
 ---                    (S':StringList withSeqNo N':Nat) > .)
                                                                                 
 --- 5
-(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
-                    (S:StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
+---(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
+---                    (S:StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
 
 --- 6
----(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
----                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) --
----                    (S''':StringList withSeqNo N''':Nat) > .)  
+(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
+                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) --
+                    (S''':StringList withSeqNo N''':Nat) > .)  
