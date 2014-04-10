@@ -165,9 +165,9 @@ endfm)
     
     class Receiver | greatestSeqNoRcvd : Nat, 
                     sender : Oid, 
-                    msgsRcvd : StringList .
+                    msgsRcvd : StringList,
                     window : windowList,
-                    windowSize : Nat .
+                    windowSize : Nat,
                     nbuffered : Nat .
     --- Note: the latter attribute is NOT a part of the protocol,
     ---       just added for analysis purposes.
@@ -193,6 +193,13 @@ endfm)
         =>
         < O : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : size(remove(WL, N)) > .
 
+    crl [rcvNewPacketFuture] :
+        (msg (S withSeqNo N) from O to O')
+        < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
+        =>
+        < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1 >
+        if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, N) .
+
     --- receive/ignore  a packet with an *old* sequence number:
     crl [rcvOldPacket] :
         (msg (S withSeqNo N) from O' to O)
@@ -200,13 +207,6 @@ endfm)
         =>
         < O : Receiver | >
         if N =/= s N' .
-
-    crl [rcvNewPacketFuture] :
-        (msg (S withSeqNo N) from O to O')
-        < O : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', windowSize : N''' >
-        =>
-        < O : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1 >
-        if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, N) .
 endom)
 
 --- Define some suitable initial states:
