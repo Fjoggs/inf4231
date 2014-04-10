@@ -239,10 +239,10 @@ endom)
                                 ack : empty,
                                 lastSent : 0 >
         < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
-                                    sender : "Sender",
-                                    window : empty,
-                                    windowSize : N,
-                                    nbuffered : 0 > .
+                                sender : "Sender",
+                                window : empty,
+                                windowSize : N,
+                                nbuffered : 0 > .
 endom)
 
 --- EXCERCISE 3
