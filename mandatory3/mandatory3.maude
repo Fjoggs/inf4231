@@ -147,7 +147,7 @@ crl [sendLast] :
     =>
      < O : Sender | >
      msg X from O to O' 
-     if X =/= tom .
+     if X =/= empty .
      
   rl [receiveCurrentAckNotLast] :
      (msg (ack withSeqNo N) from O' to O)
@@ -182,7 +182,7 @@ crl [sendLast] :
 var XS : StringList .
 
     op save : StringList windowList Nat -> StringList .
-    eq save(XS, tom, N') = XS .
+    eq save(XS, empty, N') = XS .
     eq save(XS, (S withSeqNo N) -- X, N') = if N <= N' then save((XS ++ S), X, N) else XS fi .
 
   --- send ack's, only when seqNo > 0:
