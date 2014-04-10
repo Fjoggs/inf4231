@@ -233,14 +233,14 @@ eq init(N) =
                              currentMsg : nil,
                              currentSeqNo : 0,
                              receiver : "Receiver", 
-                             window : tom,
+                             window : empty,
                              windowSize : N,
                              nbuffered : 0,
-                             ack : tom,
+                             ack : empty,
                              lastSent : 0 >
        < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
                                  sender : "Sender",
-                                 window : tom,
+                                 window : empty,
                                  windowSize : N,
                                  nbuffered : 0 > .
 endom)
