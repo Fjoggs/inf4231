@@ -270,3 +270,7 @@ endom)
 (red "Obligen" ++ "utrolig" ++ "er" ++ "spennende" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
 (red "Obligen" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
 (red "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" ++ "!!" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
+
+--- EXCERCISE 8
+(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : S:StringList > 
+    such that not((S:StringList erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende")) .)
