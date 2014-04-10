@@ -40,23 +40,23 @@ endom)
 
 --- A module for LISTS of Strings:
 (fmod STRING-LIST is protecting STRING .
-  sort StringList .
-  subsort String < StringList .
-  op nil : -> StringList [ctor] .
-  op _++_ : StringList StringList -> StringList [ctor assoc id: nil] .
-  op listSize : StringList -> Nat .
-  op _erPrefiksAv_ : StringList StringList -> Bool .
-  
-  var S S' : String .
-  var SL SL' : StringList .
+    sort StringList .
+    subsort String < StringList .
+    op nil : -> StringList [ctor] .
+    op _++_ : StringList StringList -> StringList [ctor assoc id: nil] .
+    op listSize : StringList -> Nat .
+    op _erPrefiksAv_ : StringList StringList -> Bool .
+        
+    var S S' : String .
+    var SL SL' : StringList .
 
-  eq listSize(nil) = 0 .
-  eq listSize(S ++ SL) = 1 + listSize(SX) .
+    eq listSize(nil) = 0 .
+    eq listSize(S ++ SL) = 1 + listSize(SL) .
 
-  eq nil erPrefiksAv nil = true .
-  eq nil erPrefiksAv (S' ++ SL') = true .
-  eq (S ++ SL) erPrefiksAv nil = false .
-  eq (S ++ SL) erPrefiksAv (S' ++ SL') = if S == S' then SL erPrefiksAv SL' else false fi . 
+    eq nil erPrefiksAv nil = true .
+    eq nil erPrefiksAv (S' ++ SL') = true .
+    eq (S ++ SL) erPrefiksAv nil = false .
+    eq (S ++ SL) erPrefiksAv (S' ++ SL') = if S == S' then SL erPrefiksAv SL' else false fi . 
 
 endfm)
 
