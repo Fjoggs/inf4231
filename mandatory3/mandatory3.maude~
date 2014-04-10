@@ -1,0 +1,200 @@
+--- For lectures. A simple protocol which uses sequence numbers and
+---  acknowledgments to achieve reliable and ordered communication
+---  through an unreliable (i.e., lossy and duplicating) and
+---  unordered transmission medium.
+
+--- The protocol does not terminate.
+
+--- MY CODE IS WRITTEN ALONGSIDE THIS MODULE THAT WAS GIVEN IN THE LECTURES.
+
+load full-maude
+
+--- First the message types:
+
+(omod MESSAGES is protecting STRING .
+    sort MsgContent .
+    subsort String < MsgContent .   --- our "main" messages are just strings!
+    op ack : -> MsgContent [ctor] . --- acknowledgment message  
+
+    --- sequence number wrapper:
+    msg _withSeqNo_ : MsgContent Nat -> Msg .
+
+    --- the final envelope: sender and receiver
+    msg msg_from_to_ : Msg Oid Oid -> Msg .
+endom)
+
+--- Model the possibilities for loss and duplication of messages:
+
+(omod UNRELIABILITY is protecting MESSAGES .
+    var M : Msg .
+    vars O O' : Oid .
+
+    --- Loss of a message of the given kind:
+    rl [messageLoss] :
+        msg M from O to O'  =>  none .
+
+    --- Duplication of swimming messages:
+    rl [duplicateMsg] :
+        msg M from O to O'  =>  (msg M from O to O')  (msg M from O to O') .
+endom)
+
+--- A module for LISTS of Strings:
+(fmod STRING-LIST is protecting STRING .
+    sort StringList .
+    subsort String < StringList .
+    op nil : -> StringList [ctor] .
+    op _++_ : StringList StringList -> StringList [ctor assoc id: nil] .
+
+    op listSize : StringLst -> Nat .
+
+    op _erPrefiksAv_ : StringList StringList .
+
+    var S S' : String .
+    var SL SL' : StringList .
+
+    eq listSize(nil) = 0 .
+    eq listSize(S ++ SL) = 1 + listSize(SL) .
+
+    eq nil erPrefiksAv nil = true .
+    eq nil erPrefiksAv (S ++ SL) = true .
+    eq (S ++ SL) erPrefiksAv nil = false .
+    eq (S ++ SL) erPrefiksAv (S' ++ SL')  if S == S' then SL erPrefiksAv SL' else false fi .
+endfm)
+
+--- Here comes the actual protocol:
+(omod PROTOCOL-1 is 
+    including STRING-LIST .
+    including MESSAGES .
+    including UNRELIABILITY .
+    including WINDOW-LIST .
+
+    --- Sender protocol:
+    class Sender | msgsToSend : StringList,   --- messages not sent yet
+                currentMsg : StringList,   --- current string, or nil
+                currentSeqNo : Nat,        --- seq no to current msg 
+                receiver : Oid,            --- receiver address        
+                window : windowList,
+                windowSize : Nat,
+                nbuffered : Nat,
+                ack : windowList,
+                lastSent : Nat . 
+
+    vars N N' N'' N''' : Nat .
+    var NZ : NzNat .
+    vars O O' : Oid .
+    var S S' : String .
+    var SL : StringList .
+    var WL WL' WL'' : windowList .
+    var M : Msg .
+
+    rl [start] :
+        < O : Sender | msgsToSend : S ++ SL, currentSeqNo : 0, lastSent : 0 >
+        =>
+        < O : Sender | msgsToSend : SL, currentMsg : S, currentSeqNo : 1, lastSent : 1 > .
+
+    crl [sendCurrentMsg] :      
+        < O : Sender | currentMsg : S, currentSeqNo : N, receiver : O', lastSent : N', msgsToSend: S' ++ SL, windowSize : N'', nbuffered : N''', window : WL, ack : WL' >  
+        =>
+        < O : Sender | msgsToSend : SL, currentMsg : S', window : WL' -- (S withSeqNo N'), ack : WL' -- (S withSeqNo N'), lastSent : N' + 1, nbuffered : N''' + 1 >
+        msg (S withSeqNo N) from O to O' if N'' > N''' /\ S =/= nil .
+
+    rl [receiveCurrentAckNotLast] :
+        (msg (ack withSeqNo N) from O' to O)
+        < O : Sender | currentSeqNo : N, ack : WL -- (S' withSeqNo N) -- WL', window : WL'', nbuffered : N' >
+        =>
+        < O : Sender | currentSeqNo : N + 1 + windowSize(WL), ack : WL', window : WL', nbuffered : windowSize(WL') > .
+
+    rl [receiveAckLast] :
+        (msg (ack withSeqNo N) from O' to O)
+        < O : Sender | currentSeqNo : N, msgsToSend : nil, ack : (S withSeqNo N) -- WL', window : WL'', nbuffered : N' >
+        =>
+        < O : Sender | currentSeqNo : N + 1, currentMsg : nil, ack : WL', window : WL', nbuffered : windowSize(WL') > .
+
+    crl [rcvTooOldAck] :
+        (msg (ack withSeqNo N) from O' to O)
+        < O : Sender | currentSeqNo : N' > 
+        =>
+        < O : Sender | > 
+        if N < N' .
+
+    crl [sendLast] :
+    
+
+  
+    --- Receiver protocol:
+    
+    class Receiver | greatestSeqNoRcvd : Nat, 
+                    sender : Oid, 
+                    msgsRcvd : StringList .
+    --- Note: the latter attribute is NOT a part of the protocol,
+    ---       just added for analysis purposes.
+
+    --- send ack's, only when seqNo > 0:
+    rl [sendAck] :
+        < O : Receiver | greatestSeqNoRcvd : NZ, sender : O' >
+        =>
+        < O : Receiver | >
+        msg (ack withSeqNo NZ) from O to O' .
+   
+    --- receive NEXT new packet:
+    rl [rcvNewPacket] :
+        (msg (S withSeqNo s N) from O' to O)
+        < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL >
+        =>
+        < O : Receiver | greatestSeqNoRcvd : s N, msgsRcvd : SL ++ S > .
+
+    --- receive/ignore  a packet with an *old* sequence number:
+    crl [rcvOldPacket] :
+        (msg (S withSeqNo N) from O' to O)
+        < O : Receiver | greatestSeqNoRcvd : N' >
+        =>
+        < O : Receiver | >
+        if N =/= s N' .
+endom)
+
+--- Define some suitable initial states:
+(omod TEST-PROTOCOL-1 is including PROTOCOL-1 .
+    subsort String < Oid .
+
+    op init : -> Configuration .   --- a suitable initial state
+
+    eq init =
+        < "Sender" : Sender | msgsToSend : "INF3230" ++ "er" ++ 
+                                "meget" ++ "moro",
+                                currentMsg : nil,
+                                currentSeqNo : 0,
+                                receiver : "Receiver" >
+        < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
+                                sender : "Sender" > .
+endom)
+
+(fmod WINDOW-LIST is protecting MESSAGES .
+    sort windowList .
+    subsort Msg < windowList .
+    op empty : -> Msg [ctor] .
+    op _--_ : windowList windowList -> windowList [ctor assoc id: empty] .
+    op delete : windowList Nat -> windowList .
+
+    vars N N' : Nat .
+    vars M M' : Msg .
+    vars S S' : String .
+    var WL : windowList .
+
+    op windowSize : windowList -> Nat .
+    op isPresent? : windowList Nat -> Bool .
+    op remove : windowList Nat -> windowList .
+    op add : windowList Msg -> windowList .
+
+    eq windowSize(empty) = 0 .
+    eq windowSize(M WL) = 1 + windowSize(WL) .
+
+    eq isPresent?(empty, N) = true .
+    eq isPresent?((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- X fi .
+
+    eq remove(empty, N) = empty .
+    eq remove(empty -- WL, N) = empty .
+    eq remove((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- WL fi .
+
+    eq add(empty, M) = M .
+    eq add((S withSeqNo N) -- WL, (S' withSeqNo N')) = if N > N' then (S' withSeqNo N') -- (S withSeqNo N) -- WL else (S withSeqNo N) -- add(WL, (S' withSeqNo N')) fi .
+endfm)
