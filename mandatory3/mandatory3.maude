@@ -216,6 +216,8 @@ endfm)
         if N =/= s N' .
 endom)
 
+--- EXCERCISE 2
+
 --- Define some suitable initial states:
 (omod TEST-PROTOCOL-1 is including PROTOCOL-1 .
     subsort String < Oid .
@@ -223,11 +225,18 @@ endom)
     op init : -> Configuration .   --- a suitable initial state
 
     eq init =
-        < "Sender" : Sender | msgsToSend : "INF3230" ++ "er" ++ 
-                                "meget" ++ "moro",
+        < "Sender" : Sender | msgsToSend : "Obligen" ++ "er" ++ 
+                                "utrolig" ++ "spennende" ++ "og" ++ "inspirerende",
                                 currentMsg : nil,
                                 currentSeqNo : 0,
-                                receiver : "Receiver" >
+                                receiver : "Receiver",
+                                window: empty,
+                                windowSize: N,
+                                ack : empty,
+                                lastSent : 0>
         < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
-                                sender : "Sender" > .
+                                sender : "Sender", 
+                                window : empty,
+                                windowSize : N,
+                                nbuffered : 0 > .
 endom)
