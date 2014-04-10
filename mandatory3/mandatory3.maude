@@ -48,15 +48,15 @@ endom)
   op _erPrefiksAv_ : StringList StringList -> Bool .
   
   var S S' : String .
-  var SX SX' : StringList .
+  var SL SL' : StringList .
 
   eq listSize(nil) = 0 .
-  eq listSize(S ++ SX) = 1 + size2(SX) .
+  eq listSize(S ++ SL) = 1 + listSize(SX) .
 
   eq nil erPrefiksAv nil = true .
-  eq nil erPrefiksAv (S' ++ SX') = true .
-  eq (S ++ SX) erPrefiksAv nil = false .
-  eq (S ++ SX) erPrefiksAv (S' ++ SX') = if S == S' then SX erPrefiksAv SX' else false fi . 
+  eq nil erPrefiksAv (S' ++ SL') = true .
+  eq (S ++ SL) erPrefiksAv nil = false .
+  eq (S ++ SL) erPrefiksAv (S' ++ SL') = if S == S' then SL erPrefiksAv SL' else false fi . 
 
 endfm)
 
