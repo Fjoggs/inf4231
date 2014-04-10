@@ -280,11 +280,11 @@ endom)
 --- an inital segment of our sentence.
 
 --- EXCERCISE 9
-(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
+---(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
                     (S':StringList withSeqNo N':Nat) > .)
 
----(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
----                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
+(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
+                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) > .)
 
 ---(search [1] init(3) =>+ C:Configuration < "Sender" : Sender | window : (S:StringList withSeqNo N:Nat) -- 
 ---                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) --
