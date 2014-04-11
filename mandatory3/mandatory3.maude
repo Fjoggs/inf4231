@@ -5,7 +5,10 @@
 
 --- The protocol does not terminate.
 
---- MY CODE IS WRITTEN ALONGSIDE THIS MODULE THAT WAS GIVEN IN THE LECTURES.
+--- ****************************
+--- TASK 1 BEGINS HERE
+--- My code is written with the code that was given in the lectures.
+--- ****************************
 
 load full-maude
 
@@ -57,9 +60,7 @@ endom)
     eq nil erPrefiksAv (S' ++ SL') = true .
     eq (S ++ SL) erPrefiksAv nil = false .
     eq (S ++ SL) erPrefiksAv (S' ++ SL') = if S == S' then SL erPrefiksAv SL' else false fi . 
-
 endfm)
-
 
 (fmod WINDOW-LIST is protecting MESSAGES .
     sort windowList .
@@ -86,10 +87,13 @@ endfm)
 
     eq remove(empty, N) = empty .
     eq remove(empty -- WL, N) = empty .
-    eq remove((S withSeqNo N) -- WL, N') = if N < N' then remove(WL, N') else (S withSeqNo N) -- WL fi .
+    eq remove((S withSeqNo N) -- WL, N') = if N < N' then 
+    remove(WL, N') else (S withSeqNo N) -- WL fi .
 
     eq add(empty, M) = M .
-    eq add((S withSeqNo N) -- WL, (S' withSeqNo N')) = if N > N' then (S' withSeqNo N') -- (S withSeqNo N) -- WL else (S withSeqNo N) -- add(WL, (S' withSeqNo N')) fi .
+    eq add((S withSeqNo N) -- WL, (S' withSeqNo N')) = if N > N' then 
+    (S' withSeqNo N') -- (S withSeqNo N) -- WL else 
+    (S withSeqNo N) -- add(WL, (S' withSeqNo N')) fi .
 endfm)
 
 --- Here comes the actual protocol:
@@ -98,9 +102,6 @@ endfm)
   including MESSAGES .
   including UNRELIABILITY .
   including WINDOW-LIST .
-
-
-
 
   --- Sender protocol:
     class Sender | msgsToSend : StringList,   --- messages not sent yet
@@ -112,7 +113,6 @@ endfm)
                    nbuffered : Nat,
                    ack : windowList,
                    lastSent : Nat .
-
 
     vars N N' N'' N''' : Nat .
     var NZ : NzNat .
@@ -167,10 +167,8 @@ endfm)
         =>
         < O : Sender | > 
         if N < N' .
-    
-  
+     
     --- Receiver protocol:
-    
     class Receiver | greatestSeqNoRcvd : Nat, 
                      sender : Oid, 
                      msgsRcvd : StringList,
@@ -198,7 +196,9 @@ endfm)
         (msg (S withSeqNo s N) from O' to O)
         < O : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL, window : WL, nbuffered : N' >
         =>
-        < O : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), nbuffered : wSize(remove(WL, N)) > .
+        < O : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), 
+        window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), 
+        nbuffered : wSize(remove(WL, N)) > .
 
     crl [rcvNewPacketFuture] :
         (msg (S withSeqNo N) from O' to O)
@@ -226,23 +226,22 @@ endom)
 
     var N : Nat .
 
-
     eq init(N) =
-        < "Sender" : Sender | msgsToSend : "Obligen" ++ "er" ++ 
-                                "utrolig" ++ "spennende" ++ "og" ++ "inspirerende",
-                                currentMsg : nil,
-                                currentSeqNo : 0,
-                                receiver : "Receiver", 
-                                window : empty,
-                                windowSize : N,
-                                nbuffered : 0,
-                                ack : empty,
-                                lastSent : 0 >
-        < "Receiver" : Receiver | greatestSeqNoRcvd : 0, msgsRcvd : nil,
-                                sender : "Sender",
-                                window : empty,
-                                windowSize : N,
-                                nbuffered : 0 > .
+        < "Sender" : Sender |       msgsToSend : "Obligen" ++ "er" ++ 
+                                    "utrolig" ++ "spennende" ++ "og" ++ "inspirerende",
+                                    currentMsg : nil,
+                                    currentSeqNo : 0,
+                                    receiver : "Receiver", 
+                                    window : empty,
+                                    windowSize : N,
+                                    nbuffered : 0,
+                                    ack : empty,
+                                    lastSent : 0 >
+        < "Receiver" : Receiver |   greatestSeqNoRcvd : 0, msgsRcvd : nil,
+                                    sender : "Sender",
+                                    window : empty,
+                                    windowSize : N,
+                                    nbuffered : 0 > .
 endom)
 
 --- EXCERCISE 3
@@ -265,11 +264,17 @@ endom)
 (red nil erPrefiksAv "Obligen" ++ "er" .)    --- true
 (red "Obligen" erPrefiksAv "Obligen" .)      --- true
 (red "Obligen" erPrefiksAv nil .)            --- false
-(red "Obligen" ++ "er" ++ "utrolig" ++ "spennende" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- true
-(red "Obligen" ++ "utrolig" ++ "spennende" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
-(red "Obligen" ++ "utrolig" ++ "er" ++ "spennende" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
-(red "Obligen" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
-(red "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" ++ "!!" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
+(red "Obligen" ++ "er" ++ "utrolig" ++ "spennende" erPrefiksAv "Obligen" ++ 
+    "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- true
+(red "Obligen" ++ "utrolig" ++ "spennende" erPrefiksAv "Obligen" ++ "er" ++ 
+    "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
+(red "Obligen" ++ "utrolig" ++ "er" ++ "spennende" erPrefiksAv "Obligen" ++ 
+    "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
+(red "Obligen" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" erPrefiksAv 
+    "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" .) --- false
+(red "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" ++ 
+    "!!" erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ 
+    "inspirerende" .) --- false
 
 --- EXCERCISE 8
 ---(search [1] init(4) =>+ C:Configuration < "Receiver" : Receiver | msgsRcvd : S:StringList > 
@@ -305,3 +310,223 @@ endom)
 ---(search [1] init(3) =>+ C:Configuration < "Receiver" : Receiver | window : (S:StringList withSeqNo N:Nat) -- 
 ---                    (S':StringList withSeqNo N':Nat) -- (S'':StringList withSeqNo N'':Nat) --
 ---                    (S''':StringList withSeqNo N''':Nat) > .)  
+
+--- *************************************
+--- TASK 2 BEGINS HERE
+--- *************************************
+
+--- EXCERCISE 1
+--- If the window size is 5, with sequence numbers ranging from N or N+1 there could be a
+--- problem to determine if a packet we just received is old or new.
+--- We need an upper or lower limit to determine if a packet is old or new, because
+--- we could increase the amount of sequence numbers so that the new packets have never been
+--- in the window before.
+
+--- EXCERCISE 2
+--- We can't limit the sequence numbers in correlation with the windowsize, because packets
+--- may still not have been recieved, so that some packets may wait longer than others. 
+--- Say we change window twice, an old packet may finally arrive and then it would the wrong one.
+
+--- EXCERCISE 3
+(omod MSG-LIST is 
+    sort MsgList .
+    subsort Msg < MsgList .
+    op nil : -> MsgList [ctor] .
+    op _::_ : MsgList MsgList -> MsgList [ctor assoc id: nil] .
+endom)
+
+(omod LINK is
+    protecting MSG-LIST .
+    including MESSAGES .
+  
+    class Link | content : MsgList, capacity : NzNat, currentSize : Nat . 
+    op _to_ : Oid Oid -> Oid [ctor] .
+endom)
+
+(omod LOSSY-LINK is
+    protecting LINK .
+    
+    class LossyLink .
+    subclass LossyLink < Link .
+
+    vars ML ML' : MsgList .
+    var M : Msg .
+    vars SOURCE DEST : Oid .
+    var N : Nat .
+
+    rl [lose-msg] :
+        < SOURCE to DEST : LossyLink | content : ML :: M :: ML', currentSize : s N >   =>
+        < SOURCE to DEST : LossyLink | content : ML :: ML', currentSize : N > .
+endom)
+
+(omod DUPLICATING-LINK is
+    protecting LINK .
+
+    class DuplLink .
+    subclass DuplLink < Link .
+ 
+    vars ML ML' : MsgList .
+    var M : Msg .
+    vars SOURCE DEST : Oid .
+    var NZ : NzNat .
+    var N : Nat .
+
+    crl [duplMsg] :
+        < SOURCE to DEST : DuplLink | content : ML :: M :: ML', 
+        capacity : NZ, currentSize : N >   =>
+        < SOURCE to DEST : DuplLink | content : ML :: M :: M :: ML', currentSize : N + 1 > 
+        if NZ > N .
+endom)
+
+(omod UNREL-LINK is
+    protecting LOSSY-LINK .
+    protecting DUPLICATING-LINK .
+
+    class UnrelLink .
+    subclass UnrelLink < LossyLink DuplLink .
+endom)
+
+(omod PROTOCOL-2 is
+    including STRING-LIST .
+    including WINDOW-LIST .
+    including UNREL-LINK .
+
+    --- Sender protocol:
+    class Sender | msgsToSend : StringList,   --- messages not sent yet
+                   currentMsg : StringList,   --- current string, or nil
+                   currentSeqNo : Nat,        --- seq no to current msg 
+                   receiver : Oid ,           --- receiver address        
+                   window : windowList,
+                   windowSize : Nat,
+                   nbuffered : Nat,
+                   ack : windowList,
+                   lastSent : Nat .
+
+    vars N N' N'' N''' N'''' : Nat .
+    vars NZ NZ' : NzNat .
+    vars O O' : Oid .
+    vars S S' : String .
+    var SL : StringList .
+    vars WL WL' WL'' : windowList .
+    var ML : MsgList .
+    var M : Msg .
+  
+    rl [start] :
+        < O : Sender | msgsToSend : S ++ SL, currentSeqNo : 0, lastSent : 0 >
+        =>
+        < O : Sender | msgsToSend : SL, currentMsg : S, currentSeqNo : 1, lastSent : 1 > .
+
+    crl [sendCurrentMsg] :      
+        < O : Sender | msgsToSend : S' ++ SL, currentMsg : S, currentSeqNo : N, 
+        lastSent : N', windowSize : N'', nbuffered : N''', receiver : O', window : WL, ack : WL' > 
+        < O to O' : Link | content : ML, capacity : NZ, currentSize : N'''' >
+        =>
+        < O : Sender | msgsToSend : SL, currentMsg : S', window : WL' -- (S withSeqNo N'), 
+        ack : WL' -- (S withSeqNo N') , lastSent : N' + 1, nbuffered : N''' + 1 >
+        < O to O' : Link | content : ML :: msg (S withSeqNo N') from O to O', 
+        currentSize : N'''' + 1 >
+        if N'' > N''' /\ S =/= nil /\ NZ > N'''' .
+        
+    crl [sendLast] :      
+        < O : Sender | msgsToSend : nil, currentMsg : S, currentSeqNo : N, lastSent : N', 
+        windowSize : N'', nbuffered : N''', receiver : O', window : WL, ack : WL' > 
+        < O to O' : Link | content : ML, capacity : NZ, currentSize : N'''' >
+        =>
+        < O : Sender | msgsToSend : nil, currentMsg : nil, window : WL' -- (S withSeqNo N'), 
+        ack : WL' -- (S withSeqNo N') , lastSent : N' + 1, nbuffered : N''' + 1 >
+        < O to O' : Link | content : ML :: msg (S withSeqNo N') from O to O', 
+        currentSize : N'''' + 1 >
+        if N'' > N''' /\ NZ > N'''' .
+
+    crl [resendWindow] :
+        < O : Sender | receiver : O', window : WL -- (S withSeqNo N) -- WL' >  
+        < O to O' : Link | content : ML, capacity : NZ, currentSize : N' >
+        =>
+        < O : Sender | >
+        < O to O' : Link | content : ML :: msg (S withSeqNo N) from O to O', currentSize : N' + 1 > 
+        if NZ > N' .
+        
+    rl [receiveCurrentAckNotLast] :
+        < O' : Sender | currentSeqNo : N, ack : WL -- (S' withSeqNo N''') -- WL', 
+        window : WL'', nbuffered : N'  >
+        < O to O' : Link | content : (msg (ack withSeqNo N''') from O to O') :: ML, 
+        currentSize : s N'' > 
+        =>
+        < O to O' : Link | content : ML, currentSize : N'' >
+        < O' : Sender | currentSeqNo : N + 1 + wSize(WL), ack : WL', window : WL', 
+        nbuffered : wSize(WL') > .
+
+    rl [receiveAckLast] :
+        < O' : Sender | currentSeqNo : N, msgsToSend : nil, ack : (S withSeqNo N) -- WL', 
+        window : WL'', nbuffered : N' >
+        < O to O' : Link | content : (msg (ack withSeqNo N''') from O to O') :: ML, 
+        currentSize : s N'' >
+        =>
+        < O to O' : Link | content : ML, currentSize : N'' >
+        < O' : Sender | currentSeqNo : N + 1, currentMsg : nil, ack : WL', 
+        window : WL', nbuffered : wSize(WL')  >  . 
+  
+    crl [rcvTooOldAck] :
+        < O' : Sender | currentSeqNo : N' > 
+        < O to O' : Link | content : (msg (ack withSeqNo N) from O to O') :: ML, 
+        currentSize : s N'' >
+        =>
+        < O' : Sender | > 
+        < O to O' : Link | content : ML, currentSize : N'' >
+        if N < N' .
+        
+    --- Receiver protocol:
+    class Receiver | greatestSeqNoRcvd : Nat, 
+                     sender : Oid, 
+                     msgsRcvd : StringList,
+                     window : windowList,
+                     windowSize : Nat,
+                     nbuffered : Nat .
+    var SL : StringList .
+
+    op save : StringList windowList Nat -> StringList .
+
+    eq save(SL, empty, N') = SL .
+    eq save(SL, (S withSeqNo N) -- M, N') = if N <= N' then save((SL ++ S), M, N) else SL fi .
+
+    --- send ack's, only when seqNo > 0:
+    crl [sendAck] :
+        < O : Receiver | greatestSeqNoRcvd : NZ, sender : O' >
+        < O to O' : Link | content : ML, capacity : NZ', currentSize : N >
+        =>
+        < O : Receiver | >
+        < O to O' : Link | content : ML :: (msg (ack withSeqNo NZ) from O to O'), 
+        currentSize : N + 1 > 
+        if NZ' > N .
+    
+    --- receive NEXT new packet:
+    rl [rcvNewPacket] :
+        < O' : Receiver | greatestSeqNoRcvd : N, msgsRcvd : SL, window : WL, nbuffered : N' >
+        < O to O' : Link | content : (msg (S withSeqNo s N) from O to O') :: ML, 
+        currentSize : s N'' > 
+        =>
+        < O' : Receiver | greatestSeqNoRcvd : (listSize(save((SL ++ S), WL, N))), 
+        window : remove(WL, N), msgsRcvd : save((SL ++ S), WL, N), 
+        nbuffered : wSize(remove(WL, N)) >
+        < O to O' : Link | content : ML, currentSize : N'' > .
+
+    crl [rcvNewPacketFuture] :
+        < O' : Receiver | greatestSeqNoRcvd : N', window : WL, nbuffered : N'', 
+        windowSize : N''' > 
+        < O to O' : Link | content : (msg (S withSeqNo N) from O to O') :: ML, 
+        currentSize : s N'''' > 
+        =>
+        < O' : Receiver | window : add(WL, (S withSeqNo N)), nbuffered : N'' + 1  >
+        < O to O' : Link | content : ML, currentSize : N'''' >
+        if N > N' + 1 /\ N'' < N''' /\ isPresent?(WL, (N)) .
+
+    --- receive/ignore  a packet with an *old* sequence number:
+    crl [rcvOldPacket] :
+        < O' : Receiver | greatestSeqNoRcvd : N' >
+        < O to O' : Link | content : (msg (S withSeqNo N) from O to O') :: ML, 
+        currentSize : s N'' > 
+        =>
+        < O' : Receiver | >
+        < O to O' : Link | content : ML, currentSize : N'' > 
+        if N < N' .
+endom)
