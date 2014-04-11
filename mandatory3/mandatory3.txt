@@ -1,0 +1,287 @@
+Script started on Fri 11 Apr 2014 03:29:22 PM CEST
+]0;vegardfj@smaragd: ~/opt/maude[01;32mvegardfj@smaragd [01;33m~/opt/maude [01;34m$ [00m ./maude.[K.
+maude.intelDarwin* maude.linux*       maude.linux64*     
+]0;vegardfj@smaragd: ~/opt/maude[01;32mvegardfj@smaragd [01;33m~/opt/maude [01;34m$ [00m ./maude.l
+maude.linux*   maude.linux64* 
+]0;vegardfj@smaragd: ~/opt/maude[01;32mvegardfj@smaragd [01;33m~/opt/maude [01;34m$ [00m ./maude.linux64 
+                     \||||||||||||||||||/
+                   --- Welcome to [31mM[36ma[34mu[35md[32me[0m ---
+                     /||||||||||||||||||\
+            Maude 2.6 built: Dec  9 2010 18:28:39
+            Copyright 1997-2010 SRI International
+                   Fri Apr 11 15:29:30 2014
+Maude> in ~/docu[Kments/in
+inf4151/  inf4231/  inf4820/  
+Maude> in ~/documents/inf42[K31/m
+mandatory1/  mandatory2/  mandatory3/  
+Maude> in ~/documents/inf4231/mandatory3[K/v[Kegardfj-mandatory3.maude 
+
+            Full Maude 2.5b January 14th 2011
+
+Introduced module MESSAGES
+
+Introduced module UNRELIABILITY
+
+Introduced module STRING-LIST
+
+Introduced module WINDOW-LIST
+
+Introduced module PROTOCOL-1
+
+Introduced module TEST-PROTOCOL-1
+
+[34mfrewrite in[0m TEST-PROTOCOL-1[34m :[0m
+  init(3)
+[34mresult[0m Configuration [34m:[0m
+  < "Receiver" : Receiver | greatestSeqNoRcvd : 6,helpValue : 0,msgsRcvd :("Obligen" ++ "er" ++
+    "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"),sender : "Sender",windowSize : 3,window : empty
+    > < "Sender" : Sender | ack : empty,currentMsg : nil,currentSeqNo : 7,helpValue : 0,lastSent : 7,
+    msgsToSend : nil,receiver : "Receiver",windowSize : 3,window : empty >(msg "inspirerende" withSeqNo
+    6 from "Sender" to "Receiver")(msg "inspirerende" withSeqNo 6 from "Sender" to "Receiver")(msg "og"
+    withSeqNo 5 from "Sender" to "Receiver")(msg "og" withSeqNo 5 from "Sender" to "Receiver")(msg "og"
+    withSeqNo 5 from "Sender" to "Receiver")(msg "og" withSeqNo 5 from "Sender" to "Receiver")(msg
+    "spennende" withSeqNo 4 from "Sender" to "Receiver")(msg "spennende" withSeqNo 4 from "Sender" to
+    "Receiver")(msg "spennende" withSeqNo 4 from "Sender" to "Receiver")(msg "spennende" withSeqNo 4
+    from "Sender" to "Receiver")(msg "spennende" withSeqNo 4 from "Sender" to "Receiver")(msg
+    "spennende" withSeqNo 4 from "Sender" to "Receiver")(msg "spennende" withSeqNo 4 from "Sender" to
+    "Receiver")(msg "spennende" withSeqNo 4 from "Sender" to "Receiver")(msg "utrolig" withSeqNo 3 from
+    "Sender" to "Receiver")(msg "utrolig" withSeqNo 3 from "Sender" to "Receiver")(msg "utrolig"
+    withSeqNo 3 from "Sender" to "Receiver")(msg "utrolig" withSeqNo 3 from "Sender" to "Receiver")(msg
+    ack withSeqNo 6 from "Receiver" to "Sender")(msg ack withSeqNo 6 from "Receiver" to "Sender")msg
+    ack withSeqNo 6 from "Receiver" to "Sender"
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  nil erPrefiksAv "Obligen" ++ "er"
+[34mresult[0m Bool [34m:[0m
+  true
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  "Obligen" erPrefiksAv "Obligen"
+[34mresult[0m Bool [34m:[0m
+  true
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  "Obligen" erPrefiksAv nil
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  ("Obligen" ++ "er" ++ "utrolig" ++ "spennende")erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++
+    "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  true
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  ("Obligen" ++ "utrolig" ++ "spennende")erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++
+    "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  ("Obligen" ++ "utrolig" ++ "er" ++ "spennende")erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++
+    "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  ("Obligen" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende")erPrefiksAv "Obligen" ++ "er" ++
+    "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-1[34m :[0m
+  ("Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" ++ "!!")erPrefiksAv
+    "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+search [1] in TEST-PROTOCOL-1 : init(3) =>+ C:Configuration < "Sender" : V#0:Sender | window :((
+    S:StringList withSeqNo N:Nat)-- S':StringList withSeqNo N':Nat),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Receiver" : Receiver | greatestSeqNoRcvd : 0,helpValue : 0,msgsRcvd : nil,sender
+    : "Sender",windowSize : 3,window : empty >(msg "Obligen" withSeqNo 1 from "Sender" to
+    "Receiver")msg "er" withSeqNo 2 from "Sender" to "Receiver" ; N':Nat --> 2 ; N:Nat --> 1 ;
+    S':StringList --> "er" ; S:StringList --> "Obligen" ; V#0:Sender --> Sender ; V#1:AttributeSet -->
+    ack :(("Obligen" withSeqNo 1)-- "er" withSeqNo 2),currentMsg : "utrolig",currentSeqNo : 1,helpValue
+    : 2,lastSent : 3,msgsToSend :("spennende" ++ "og" ++ "inspirerende"),receiver : "Receiver",
+    windowSize : 3
+
+
+search [1] in TEST-PROTOCOL-1 : init(3) =>+ C:Configuration < "Sender" : V#0:Sender | window :((
+    S:StringList withSeqNo N:Nat)--(S':StringList withSeqNo N':Nat)-- S'':StringList withSeqNo
+    N'':Nat),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Receiver" : Receiver | greatestSeqNoRcvd : 0,helpValue : 0,msgsRcvd : nil,sender
+    : "Sender",windowSize : 3,window : empty >(msg "Obligen" withSeqNo 1 from "Sender" to "Receiver")(
+    msg "er" withSeqNo 2 from "Sender" to "Receiver")msg "utrolig" withSeqNo 3 from "Sender" to
+    "Receiver" ; N'':Nat --> 3 ; N':Nat --> 2 ; N:Nat --> 1 ; S'':StringList --> "utrolig" ;
+    S':StringList --> "er" ; S:StringList --> "Obligen" ; V#0:Sender --> Sender ; V#1:AttributeSet -->
+    ack :(("Obligen" withSeqNo 1)--("er" withSeqNo 2)-- "utrolig" withSeqNo 3),currentMsg :
+    "spennende",currentSeqNo : 1,helpValue : 3,lastSent : 4,msgsToSend :("og" ++ "inspirerende"),
+    receiver : "Receiver",windowSize : 3
+
+
+search [1] in TEST-PROTOCOL-1 : init(3) =>+ C:Configuration < "Receiver" : V#0:Receiver | window :((
+    S:StringList withSeqNo N:Nat)-- S':StringList withSeqNo N':Nat),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Sender" : Sender | ack :(("Obligen" withSeqNo 1)--("er" withSeqNo 2)-- "utrolig"
+    withSeqNo 3),currentMsg : "spennende",currentSeqNo : 1,helpValue : 3,lastSent : 4,msgsToSend :("og"
+    ++ "inspirerende"),receiver : "Receiver",windowSize : 3,window :(("Obligen" withSeqNo 1)--("er"
+    withSeqNo 2)-- "utrolig" withSeqNo 3)> msg "Obligen" withSeqNo 1 from "Sender" to "Receiver" ;
+    N':Nat --> 3 ; N:Nat --> 2 ; S':StringList --> "utrolig" ; S:StringList --> "er" ; V#0:Receiver -->
+    Receiver ; V#1:AttributeSet --> greatestSeqNoRcvd : 0,helpValue : 2,msgsRcvd : nil,sender :
+    "Sender",windowSize : 3
+
+
+Introduced module MSG-LIST
+
+Introduced module LINK
+
+Introduced module LOSSY-LINK
+
+Introduced module DUPLICATING-LINK
+
+Introduced module UNREL-LINK
+
+Introduced module PROTOCOL-2
+
+Introduced module TEST-PROTOCOL-2
+
+[34mfrewrite in[0m TEST-PROTOCOL-2[34m :[0m
+  initProtocol2(3,3)
+[34mresult[0m Configuration [34m:[0m
+  < "Receiver" : Receiver | greatestSeqNoRcvd : 6,helpValue : 0,msgsRcvd :("Obligen" ++ "er" ++
+    "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"),sender : "Sender",windowSize : 3,window : empty
+    > < "Sender" : Sender | ack : empty,currentMsg : nil,currentSeqNo :(3 + wSize(("Obligen" withSeqNo
+    1)-- "er" withSeqNo 2)+ wSize(("spennende" withSeqNo 4)-- "og" withSeqNo 5)),helpValue : 0,lastSent
+    : 7,msgsToSend : nil,receiver : "Receiver",windowSize : 3,window : empty > < "Receiver" to "Sender"
+    : UnrelLink | capacity : 3,content :((msg ack withSeqNo 6 from "Receiver" to "Sender")::(msg ack
+    withSeqNo 6 from "Receiver" to "Sender"):: msg ack withSeqNo 6 from "Receiver" to "Sender"),
+    currentSize : 3 > < "Sender" to "Receiver" : UnrelLink | capacity : 3,content : nil,currentSize : 0
+    >
+
+search [1] in TEST-PROTOCOL-2 : initProtocol2(2,2) =>+ C:Configuration < "Receiver" : V#0:Receiver |
+    msgsRcvd :("Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"),
+    V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Sender" : Sender | ack :(("og" withSeqNo 5)-- "inspirerende" withSeqNo 6),
+    currentMsg : nil,currentSeqNo :(3 + wSize("Obligen" withSeqNo 1)+ wSize("utrolig" withSeqNo 3)),
+    helpValue : 2,lastSent : 7,msgsToSend : nil,receiver : "Receiver",windowSize : 2,window :(("og"
+    withSeqNo 5)-- "inspirerende" withSeqNo 6)> < "Receiver" to "Sender" : UnrelLink | capacity : 2,
+    content : nil,currentSize : 0 > < "Sender" to "Receiver" : UnrelLink | capacity : 2,content : nil,
+    currentSize : 0 > ; V#0:Receiver --> Receiver ; V#1:AttributeSet --> greatestSeqNoRcvd : 6,
+    helpValue : 0,sender : "Sender",windowSize : 2,window : empty
+
+
+search [1] in TEST-PROTOCOL-2 : initProtocol2(4,4) =>+ C:Configuration < "Receiver" : V#0:Receiver |(
+    msgsRcvd : nil,window : "utrolig" withSeqNo 3),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Sender" : Sender | ack :(("Obligen" withSeqNo 1)--("er" withSeqNo 2)-- "utrolig"
+    withSeqNo 3),currentMsg : "spennende",currentSeqNo : 1,helpValue : 3,lastSent : 4,msgsToSend :("og"
+    ++ "inspirerende"),receiver : "Receiver",windowSize : 4,window :(("Obligen" withSeqNo 1)--("er"
+    withSeqNo 2)-- "utrolig" withSeqNo 3)> < "Receiver" to "Sender" : UnrelLink | capacity : 4,content
+    : nil,currentSize : 0 > < "Sender" to "Receiver" : UnrelLink | capacity : 4,content : nil,
+    currentSize : 0 > ; V#0:Receiver --> Receiver ; V#1:AttributeSet --> greatestSeqNoRcvd : 0,
+    helpValue : 1,sender : "Sender",windowSize : 4
+
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  nil erPrefiksAv "Obligen" ++ "er"
+[34mresult[0m Bool [34m:[0m
+  true
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  "Obligen" erPrefiksAv "Obligen"
+[34mresult[0m Bool [34m:[0m
+  true
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  "Obligen" erPrefiksAv nil
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  ("Obligen" ++ "er" ++ "utrolig" ++ "spennende")erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++
+    "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  true
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  ("Obligen" ++ "utrolig" ++ "spennende")erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++
+    "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  ("Obligen" ++ "utrolig" ++ "er" ++ "spennende")erPrefiksAv "Obligen" ++ "er" ++ "utrolig" ++
+    "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  ("Obligen" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende")erPrefiksAv "Obligen" ++ "er" ++
+    "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+[34mreduce in[0m TEST-PROTOCOL-2[34m :[0m
+  ("Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende" ++ "!!")erPrefiksAv
+    "Obligen" ++ "er" ++ "utrolig" ++ "spennende" ++ "og" ++ "inspirerende"
+[34mresult[0m Bool [34m:[0m
+  false
+
+search [1] in TEST-PROTOCOL-2 : initProtocol2(3,3) =>+ C:Configuration < "Sender" : V#0:Sender | window
+    :((S:StringList withSeqNo N:Nat)-- S':StringList withSeqNo N':Nat),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Receiver" : Receiver | greatestSeqNoRcvd : 0,helpValue : 0,msgsRcvd : nil,sender
+    : "Sender",windowSize : 3,window : empty > < "Receiver" to "Sender" : UnrelLink | capacity : 3,
+    content : nil,currentSize : 0 > < "Sender" to "Receiver" : UnrelLink | capacity : 3,content :((msg
+    "Obligen" withSeqNo 1 from "Sender" to "Receiver"):: msg "er" withSeqNo 2 from "Sender" to
+    "Receiver"),currentSize : 2 > ; N':Nat --> 2 ; N:Nat --> 1 ; S':StringList --> "er" ; S:StringList
+    --> "Obligen" ; V#0:Sender --> Sender ; V#1:AttributeSet --> ack :(("Obligen" withSeqNo 1)-- "er"
+    withSeqNo 2),currentMsg : "utrolig",currentSeqNo : 1,helpValue : 2,lastSent : 3,msgsToSend :(
+    "spennende" ++ "og" ++ "inspirerende"),receiver : "Receiver",windowSize : 3
+
+
+search [1] in TEST-PROTOCOL-2 : initProtocol2(3,3) =>+ C:Configuration < "Sender" : V#0:Sender | window
+    :((S:StringList withSeqNo N:Nat)--(S':StringList withSeqNo N':Nat)-- S'':StringList withSeqNo
+    N'':Nat),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Receiver" : Receiver | greatestSeqNoRcvd : 0,helpValue : 0,msgsRcvd : nil,sender
+    : "Sender",windowSize : 3,window : empty > < "Receiver" to "Sender" : UnrelLink | capacity : 3,
+    content : nil,currentSize : 0 > < "Sender" to "Receiver" : UnrelLink | capacity : 3,content :((msg
+    "Obligen" withSeqNo 1 from "Sender" to "Receiver")::(msg "er" withSeqNo 2 from "Sender" to
+    "Receiver"):: msg "utrolig" withSeqNo 3 from "Sender" to "Receiver"),currentSize : 3 > ; N'':Nat
+    --> 3 ; N':Nat --> 2 ; N:Nat --> 1 ; S'':StringList --> "utrolig" ; S':StringList --> "er" ;
+    S:StringList --> "Obligen" ; V#0:Sender --> Sender ; V#1:AttributeSet --> ack :(("Obligen"
+    withSeqNo 1)--("er" withSeqNo 2)-- "utrolig" withSeqNo 3),currentMsg : "spennende",currentSeqNo :
+    1,helpValue : 3,lastSent : 4,msgsToSend :("og" ++ "inspirerende"),receiver : "Receiver",windowSize
+    : 3
+
+
+search [1] in TEST-PROTOCOL-2 : initProtocol2(3,3) =>+ C:Configuration < "Receiver" : V#0:Receiver |
+    window :((S:StringList withSeqNo N:Nat)-- S':StringList withSeqNo N':Nat),V#1:AttributeSet > .
+
+Solution 1
+C:Configuration --> < "Sender" : Sender | ack :(("Obligen" withSeqNo 1)--("er" withSeqNo 2)-- "utrolig"
+    withSeqNo 3),currentMsg : "spennende",currentSeqNo : 1,helpValue : 3,lastSent : 4,msgsToSend :("og"
+    ++ "inspirerende"),receiver : "Receiver",windowSize : 3,window :(("Obligen" withSeqNo 1)--("er"
+    withSeqNo 2)-- "utrolig" withSeqNo 3)> < "Receiver" to "Sender" : UnrelLink | capacity : 3,content
+    : nil,currentSize : 0 > < "Sender" to "Receiver" : UnrelLink | capacity : 3,content : nil,
+    currentSize : 0 > ; N':Nat --> 3 ; N:Nat --> 2 ; S':StringList --> "utrolig" ; S:StringList -->
+    "er" ; V#0:Receiver --> Receiver ; V#1:AttributeSet --> greatestSeqNoRcvd : 0,helpValue : 2,
+    msgsRcvd : nil,sender : "Sender",windowSize : 3
+
+
+Maude> quit
+Bye.
+]0;vegardfj@smaragd: ~/opt/maude[01;32mvegardfj@smaragd [01;33m~/opt/maude [01;34m$ [00m exit
+
+Script done on Fri 11 Apr 2014 03:29:49 PM CEST
