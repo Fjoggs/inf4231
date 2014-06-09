@@ -1,0 +1,31 @@
+fmod INSERTION-SORT is protecting NAT .
+    sorts List NeList .
+    subsorts Nat < NeList < List .
+
+    *** Constructors
+    op nil : -> List [ctor] .
+    op __ : List List -> List [assoc id: nil ctor] .
+    op __ : NeList NeList -> NeList [assoc id: nil ctor] .
+
+    op insertionSort : List -> List .
+    op insertionSort : List List -> List .
+
+    op accSum : List -> List .
+    op accSum : List Nat -> List .
+
+    vars N N' N'' : Nat .
+    vars L L' L'' : List .
+
+    eq insertionSort(L) = insertionSort(nil, L) .
+    eq insertionSort(L, nil) = L .
+
+    eq insertionSort(nil, N L) = insertionSort(N, L) .
+    ceq insertionSort(L N, N' L') = insertionSort(L N N', L') if N <= N' .
+    ceq insertionSort(N L, N' L') = insertionSort(N' N L, L') if N' <= N .
+    ceq insertionSort(L N N'' L', N' L'') = insertionSort(L N N' N'' L', L'')
+                if N <= N' and N' <= N''  .
+
+    eq accSum(L) = accSum(L, 0) .
+    eq accSum(nil, N) = nil .
+    eq accSum(N L, N') = (N + N') accSum(L, N' + N) .
+endfm

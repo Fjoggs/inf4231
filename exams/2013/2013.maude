@@ -1,0 +1,59 @@
+fmod SUBSET-SUM is protecting NAT .
+    sort Mset .
+    subsort NzNat < Mset .
+
+    op none : -> NzNat [ctor] .
+    op __ : Mset Mset -> Mset [ctor assoc comm id: none] .
+
+    op subsetSum : Mset NzNat -> Bool .
+    op multiSubsetSum : Mset NzNat -> Bool .
+
+    var S : Mset .
+    vars N N' N'' currentSum : NzNat .
+
+    eq subsetSum(none, N) = false .
+    eq subsetSum(N S, N) = true .
+
+    ceq subsetSum(N S, N') = subsetSum(S, sd(N, N')) or subsetSum(S, N') if N' > N .
+    ceq subsetSum(N S, N') = subsetSum(S, N') if N > N' .
+
+    eq multiSubsetSum(none, N) = false .
+    eq multiSubsetSum(N S, N) = true .
+
+    ceq multiSubsetSum(N S, N') = multiSubsetSum(N S, sd(N, N')) or subsetSum(S, N') if N' > N .
+    ceq multiSubsetSum(N S, N') = multiSubsetSum(S, N') if N > N' .
+endfm
+
+mod HANOI is protecting NAT .
+    sort ListNat .
+    subsort NzNat < ListNat .
+    op nil : -> ListNat  [ctor] .
+    op _::_ : ListNat ListNat -> ListNat [ctor assoc id: nil] .
+
+
+    sorts Peg Pegs .
+    subsort Peg < Pegs .
+    op peg_hasStack_ : NzNat ListNat -> Peg [ctor] .
+    op none : -> Pegs [ctor] .
+    op __ : Pegs Pegs -> Pegs [ctor assoc comm id: none] .
+
+    op init : NzNat NzNat -> Pegs .
+    
+    var N1 N2 N3 P1 P2 P3 : NzNat .
+    vars L1 L2 L3 : ListNat .
+
+    eq init(0, N1) = empty .
+    eq init(N1, 0) = empty .
+    eq init(s(N1), N2) = init(N1, N) (peg s(N1) hasStack nil) . 
+    eq init(1, N) = (peg 1 hasStack list(N)) .
+    op list : NzNat -> ListNat .
+
+    eq list(s(N1)) = s(N) :: list(N) .
+    eq list(1) = 1 .
+
+    rl [move] :  (peg P1 hasStack L1 :: N1) (peg P2 hasStack nil)
+                    => (peg P1 hasStack L1) (peg P2 hasStack N1) .
+    rl [move2] : (peg P1 hasStack L1 :: N1) (peg P2 hasStack L2 :: N2)
+                    => (peg P1 hasStack L1) (peg P2 hasStack L2 :: N2 :: N1) .
+
+endm

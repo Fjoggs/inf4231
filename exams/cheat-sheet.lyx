@@ -344,7 +344,7 @@ INF3230
 \end_layout
 
 \end_deeper
-\begin_layout Subsection
+\begin_layout Subsubsection
 Justice
 \end_layout
 
@@ -769,5 +769,386 @@ Temporallogikk
 Globale egenskaper
 \end_layout
 
+\begin_layout Part
+Maude
+\end_layout
+
+\begin_layout Section
+Predefinerte moduler
+\end_layout
+
+\begin_layout Subsection
+Nat
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+fmod NAT is
+\end_layout
+
+\begin_layout LyX-Code
+sorts Zero NzNat Nat .
+\end_layout
+
+\begin_layout LyX-Code
+subsort Zero NzNat < Nat .
+\end_layout
+
+\begin_layout LyX-Code
+op 0 : -> Zero [ctor]
+\end_layout
+
+\begin_layout LyX-Code
+op s_ : Nat -> NzNat [ctor iter special (...)] .
+\end_layout
+
+\begin_layout LyX-Code
+op _+_ : Nat Nat -> Nat [...] .
+\end_layout
+
+\begin_layout LyX-Code
+op sd : Nat Nat -> Nat [...] 
+\end_layout
+
+\begin_layout LyX-Code
+op _*_ : Nat Nat -> Nat [...] .
+\end_layout
+
+\begin_layout LyX-Code
+op _quo_ : Nat NzNat -> Nat [...] .
+\end_layout
+
+\begin_layout LyX-Code
+...
+\end_layout
+
+\begin_layout LyX-Code
+op _<_ : Nat Nat -> Bool [...] .
+\end_layout
+
+\begin_layout LyX-Code
+op _<=_ : Nat Nat -> Bool [...] .
+\end_layout
+
+\begin_layout LyX-Code
+endfm
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Nat
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+sd = Symmetrisk differanse = Stor minus liten uansett, sd(4,9) & sd(9,4)
+ = 5 i begge tilfeller.
+\end_layout
+
+\begin_layout Subsection
+Int
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+fmod INT is protecting NAT .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+sorts NzInt Int .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+subsorts NzNat < NzInt Nat < Int .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op -_ : NzNat -> NzInt [ctor special (...)] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op -_ : Int -> Int [...] .
+ op _+_ : Int Int -> Int [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op _-_ : Int Int -> Int [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op _*_ : Int Int -> Int [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op abs : Int -> Nat [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op _<_ : Int Int -> Bool [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+...
+ 
+\end_layout
+
+\begin_layout LyX-Code
+endfm
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Int
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+String
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+fmod STRING is protecting NAT .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+sorts String Char FindResult .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+subsort Char < String .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+subsort Nat < FindResult .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op <Strings> : -> Char [special (...)] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op <Strings> : -> String [ditto] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op notFound : -> FindResult [ctor] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op _+_ : String String -> String [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op length : String -> Nat [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op substr : String Nat Nat -> String [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op find : String String Nat -> FindResult [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+op _<_ : String String -> Bool [...] .
+ 
+\end_layout
+
+\begin_layout LyX-Code
+...
+ 
+\end_layout
+
+\begin_layout LyX-Code
+endfm
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+String
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Temaer
+\end_layout
+
+\begin_layout Section
+Forenklingsordninger
+\end_layout
+
+\begin_layout Itemize
+t 
+\series bold
+trekant mot høyre/strek under
+\series default
+ t'
+\end_layout
+
+\begin_layout Itemize
+Lexicographic path ordering
+\end_layout
+
+\begin_layout Subsection
+Embedding
+\end_layout
+
+\begin_layout Part
+Eksamen
+\end_layout
+
+\begin_layout Section
+Eksamensoversikt
+\end_layout
+
+\begin_layout Subsection
+2013
+\end_layout
+
+\begin_layout Enumerate
+Maude
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Subset sum
+\end_layout
+
+\begin_layout Enumerate
+Multi-subset sum
+\end_layout
+
+\begin_layout Enumerate
+Terminering - vekt
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Terminering
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Forenklingsordning
+\end_layout
+
+\begin_layout Enumerate
+Forenklingsordning
+\end_layout
+
+\begin_layout Enumerate
+Vektfunksjoner
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Maude - Stor oppgave
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Programmer
+\end_layout
+
+\begin_layout Enumerate
+Initialtilstand-programmering (init(n))
+\end_layout
+
+\begin_layout Enumerate
+Terminering og konfluens
+\end_layout
+
+\begin_layout Enumerate
+Optimalt spill med evt maude kommandoer
+\end_layout
+
+\begin_layout Enumerate
+Temporale egenskaper
+\end_layout
+
+\begin_layout Enumerate
+Invarians med maude kommandoer
+\end_layout
+
+\end_deeper
 \end_body
 \end_document

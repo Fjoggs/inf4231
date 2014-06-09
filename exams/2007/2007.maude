@@ -1,0 +1,15 @@
+mod PHONE is protecting NAT .
+    sort KindOfPhone .
+    ops cell home work : -> KindOfPhone [ctor] .
+
+    sort Data .
+    op <_;_;_> : String KindofPhone Nat -> Data [ctor] .
+
+    sort Directory .
+    subsort Data < Directory .
+    op empty : -> Directory [ctor] .
+    op __ : Directory Directory -> Directory [ctor assoc comm id: empty] .
+
+    op insertData : Data Directory -> Directory .
+
+endfm
