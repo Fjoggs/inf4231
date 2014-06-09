@@ -1,0 +1,133 @@
+Maude> in ~/documents/inf4231/mandatory1/mandatory1-te[Ksting.maude 
+
+==========================================
+.
+Reading in file: "mandatory1.maude"
+==========================================
+fmod NAT-MULT
+==========================================
+fmod NAT-MONUS
+==========================================
+fmod BOOLEAN
+==========================================
+fmod LIST
+[32mAdvisory: [0mredefining module [35mLIST[0m.
+==========================================
+fmod LIST-FUNCTIONS
+==========================================
+fmod BINTREE-NAT1
+Done reading in file: "mandatory1.maude"
+[31mWarning: [0m"mandatory1-testing.maude", line 8: bad token [35mmonus[0m.
+[31mWarning: [0m"mandatory1-testing.maude", line 8: no parse for term.
+[31mWarning: [0m"mandatory1-testing.maude", line 9: bad token [35mmonus[0m.
+[31mWarning: [0m"mandatory1-testing.maude", line 9: no parse for term.
+[31mWarning: [0m"mandatory1-testing.maude", line 10: bad token [35mmonus[0m.
+[31mWarning: [0m"mandatory1-testing.maude", line 10: no parse for term.
+==========================================
+reduce in BINTREE-NAT1 : empty?(nil) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result Boolean: true
+==========================================
+reduce in BINTREE-NAT1 : rest(nil) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil
+==========================================
+reduce in BINTREE-NAT1 : last(nil) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result Nat: 0
+==========================================
+reduce in BINTREE-NAT1 : reverse(nil) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil
+==========================================
+reduce in BINTREE-NAT1 : empty?(nil s(0)) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result Boolean: false
+==========================================
+reduce in BINTREE-NAT1 : rest(nil s(0)) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil
+==========================================
+reduce in BINTREE-NAT1 : last(nil s(0)) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result Nat: s(0)
+==========================================
+reduce in BINTREE-NAT1 : reverse(nil s(0)) .
+rewrites: 3 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(0)
+==========================================
+reduce in BINTREE-NAT1 : empty?(nil s(s(s(0))) s(0) s(s(0))) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result Boolean: false
+==========================================
+reduce in BINTREE-NAT1 : rest(nil s(s(s(0))) s(0) s(s(0))) .
+rewrites: 3 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(0) s(s(0))
+==========================================
+reduce in BINTREE-NAT1 : last(nil s(s(s(0))) s(0) s(s(0))) .
+rewrites: 3 in 0ms cpu (0ms real) (~ rewrites/second)
+result Nat: s(s(0))
+==========================================
+reduce in BINTREE-NAT1 : reverse(nil s(s(s(0))) s(0) s(s(0))) .
+rewrites: 10 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(s(0)) s(0) s(s(s(0)))
+==========================================
+reduce in BINTREE-NAT1 : inorder(bintree(niltree, s(s(s(s(0)))), bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+rewrites: 8 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(s(s(s(0)))) s(s(s(s(s(s(s(0)))))))
+==========================================
+reduce in BINTREE-NAT1 : postorder(bintree(niltree, s(s(s(s(0)))), bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+rewrites: 10 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(s(s(s(s(s(s(0))))))) s(s(s(s(0))))
+==========================================
+reduce in BINTREE-NAT1 : weight(bintree(niltree, s(s(s(s(0)))), bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+rewrites: 20 in 0ms cpu (0ms real) (~ rewrites/second)
+result Nat: s(s(s(s(s(s(s(s(s(s(s(0)))))))))))
+==========================================
+reduce in BINTREE-NAT1 : reverse(bintree(niltree, s(s(s(s(0)))), bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+rewrites: 5 in 0ms cpu (0ms real) (~ rewrites/second)
+result BinTree: bintree(bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree), s(s(s(s(0)))), niltree)
+==========================================
+reduce in BINTREE-NAT1 : inorder(niltree) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil
+==========================================
+reduce in BINTREE-NAT1 : postorder(niltree) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil
+==========================================
+reduce in BINTREE-NAT1 : weight(niltree) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result Nat: 0
+==========================================
+reduce in BINTREE-NAT1 : reverse(niltree) .
+rewrites: 1 in 0ms cpu (0ms real) (~ rewrites/second)
+result BinTree: niltree
+==========================================
+reduce in BINTREE-NAT1 : inorder(bintree(bintree(niltree, s(s(0)), bintree(niltree, s(s(s(0))), niltree)), s(s(s(s(0)))), bintree(bintree(niltree, s(
+    s(s(s(s(s(0)))))), niltree), s(s(s(s(s(s(s(0))))))), bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+rewrites: 24 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(s(0)) s(s(s(0))) s(s(s(s(0)))) s(s(s(s(s(s(0)))))) s(s(s(s(s(s(s(0))))))) s(s(s(s(s(s(s(s(s(0)))))))))
+==========================================
+reduce in BINTREE-NAT1 : postorder(bintree(bintree(niltree, s(s(0)), bintree(niltree, s(s(s(0))), niltree)), s(s(s(s(0)))), bintree(bintree(niltree,
+    s(s(s(s(s(s(0)))))), niltree), s(s(s(s(s(s(s(0))))))), bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+rewrites: 30 in 0ms cpu (0ms real) (~ rewrites/second)
+result List: nil s(s(s(0))) s(s(0)) s(s(s(s(s(s(0)))))) s(s(s(s(s(s(s(s(s(0))))))))) s(s(s(s(s(s(s(0))))))) s(s(s(s(0))))
+==========================================
+reduce in BINTREE-NAT1 : weight(bintree(bintree(niltree, s(s(0)), bintree(niltree, s(s(s(0))), niltree)), s(s(s(s(0)))), bintree(bintree(niltree, s(
+    s(s(s(s(s(0)))))), niltree), s(s(s(s(s(s(s(0))))))), bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+rewrites: 67 in 0ms cpu (0ms real) (~ rewrites/second)
+result Nat: s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(s(0)))))))))))))))))))))))))))))))
+==========================================
+reduce in BINTREE-NAT1 : reverse(bintree(bintree(niltree, s(s(0)), bintree(niltree, s(s(s(0))), niltree)), s(s(s(s(0)))), bintree(bintree(niltree, s(
+    s(s(s(s(s(0)))))), niltree), s(s(s(s(s(s(s(0))))))), bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+rewrites: 13 in 0ms cpu (0ms real) (~ rewrites/second)
+result BinTree: bintree(bintree(bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree), s(s(s(s(s(s(s(0))))))), bintree(niltree, s(s(s(s(s(s(
+    0)))))), niltree)), s(s(s(s(0)))), bintree(bintree(niltree, s(s(s(0))), niltree), s(s(0)), niltree))
+
+Maude> quit
+
+Bye.
+]0;fjogen@openSUSE-Laptop:~/opt/maude]7;file://openSUSE-Laptop.site/home/fjogen/opt/maude]0;fjogen@openSUSE-Laptop: ~/opt/maude[01;32mfjogen@openSUSE-Laptop [01;33m~/opt/maude [01;34m$ [00m exit
+
+Script done on Fri 07 Feb 2014 08:03:31 PM CET

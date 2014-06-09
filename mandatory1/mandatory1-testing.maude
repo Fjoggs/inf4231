@@ -1,0 +1,61 @@
+--- Turn off automatic import of Maude's BOOL module:
+set protect BOOL off .
+
+--- Read the file with your modules:
+in ~/documents/inf4231/mandatory1/mandatory1.maude .
+
+--- Maybe here you need a comand a la "select MODULE-NAME ."
+red s(s(s(s(s(0))))) monus s(s(0)) .
+red s(s(0)) monus s(s(s(0))) .
+red s(0) monus s(0) .
+
+red empty?(nil) .
+red rest(nil) .
+red last(nil) .
+red reverse(nil) .
+red empty?(nil s(0)) .
+red rest(nil s(0)) .
+red last(nil s(0)) .
+red reverse(nil s(0)) .
+red empty?(nil s(s(s(0))) s(0) s(s(0))) .
+red rest(nil s(s(s(0))) s(0) s(s(0))) .
+red last(nil s(s(s(0))) s(0) s(s(0))) .
+red reverse(nil s(s(s(0))) s(0) s(s(0))) .
+
+red inorder(bintree(niltree, s(s(s(s(0)))), 
+                    bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+red postorder(bintree(niltree, s(s(s(s(0)))), 
+              bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+red weight(bintree(niltree, s(s(s(s(0)))), 
+                   bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+red reverse(bintree(niltree, s(s(s(s(0)))), 
+                    bintree(niltree, s(s(s(s(s(s(s(0))))))), niltree))) .
+red inorder(niltree) .
+red postorder(niltree) .
+red weight(niltree) .
+red reverse(niltree) .
+red inorder(bintree(bintree(niltree, s(s(0)), 
+                            bintree(niltree, s(s(s(0))), niltree)), 
+            s(s(s(s(0)))), 
+            bintree(bintree(niltree, s(s(s(s(s(s(0)))))), niltree), 
+                    s(s(s(s(s(s(s(0))))))), 
+                   bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+red postorder(bintree(bintree(niltree, s(s(0)), 
+                            bintree(niltree, s(s(s(0))), niltree)), 
+            s(s(s(s(0)))), 
+            bintree(bintree(niltree, s(s(s(s(s(s(0)))))), niltree), 
+                    s(s(s(s(s(s(s(0))))))), 
+                   bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+red weight(bintree(bintree(niltree, s(s(0)), 
+                            bintree(niltree, s(s(s(0))), niltree)), 
+            s(s(s(s(0)))), 
+            bintree(bintree(niltree, s(s(s(s(s(s(0)))))), niltree), 
+                    s(s(s(s(s(s(s(0))))))), 
+                   bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+red reverse(bintree(bintree(niltree, s(s(0)), 
+                            bintree(niltree, s(s(s(0))), niltree)), 
+            s(s(s(s(0)))), 
+            bintree(bintree(niltree, s(s(s(s(s(s(0)))))), niltree), 
+                    s(s(s(s(s(s(s(0))))))), 
+                   bintree(niltree, s(s(s(s(s(s(s(s(s(0))))))))), niltree)))) .
+

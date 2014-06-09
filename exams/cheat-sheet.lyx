@@ -1,0 +1,773 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+INF4230 Relatert
+\end_layout
+
+\begin_layout Section
+Egenskaper/spesifikasjoner
+\end_layout
+
+\begin_layout Subsection
+Systemspesifikasjoner
+\end_layout
+
+\begin_layout Itemize
+Vår modell/spesifikasjon av sliding window
+\end_layout
+
+\begin_layout Itemize
+ABP
+\end_layout
+
+\begin_layout Itemize
+2-fase commit
+\end_layout
+
+\begin_layout Itemize
+NSPK
+\end_layout
+
+\begin_layout Itemize
+Spisende filosofer
+\end_layout
+
+\begin_layout Subsection
+Kravspesifikasjoner
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+To filosofer kan aldri holde samme pinne samtidig
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+i enhver sluttilstand skal databasen være konsistent
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+før eller siden vil den ønskede teksten mottas av mottageren i riktig rekkefølge
+ i sliding-window-protokollen
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mottageren skal hele tiden ha mottat et prefiks av tekstene som senderen
+ vil sende
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+enhver filosof skal få spise vikåerlig mange ganger
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+filosof 3 spiser minst 20 ganger
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Klasser av egenskaper
+\end_layout
+
+\begin_layout Itemize
+P er 
+\series bold
+invariant
+\series default
+ = P holder i 
+\series bold
+enhver
+\series default
+ tilstand som kan nås fra initialtilstanden
+\end_layout
+
+\begin_layout Itemize
+P er 
+\series bold
+garantert oppnåelig
+\series default
+ = P vil holde 
+\series bold
+en eller annen gang i enhver oppførsel
+\series default
+ fra initialtilstanden
+\end_layout
+
+\begin_layout Itemize
+P er 
+\series bold
+oppnåelig
+\series default
+ = en tilstand som tilfredsstiller P 
+\series bold
+kan nås
+\series default
+ fra initialtilstanden
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Response/reactivity
+\series default
+ = enhver P-tilstand vil lede til en Q-tilstand i 
+\series bold
+enhver
+\series default
+ oppførsel
+\end_layout
+
+\begin_layout Itemize
+P er 
+\series bold
+stabil 
+\series default
+= hvis en P-tilstand nås, vil alle etterfølgende tilstander også være P-tilstand
+er
+\end_layout
+
+\begin_layout Itemize
+P 
+\series bold
+until
+\series default
+ Q = i 
+\series bold
+enhver
+\series default
+ oppførsel holder P i enhver tilstand helt til man kommer til en tilstand
+ hvor Q kommer
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(strong) 
+\series bold
+until
+\series default
+ = Q må holde før eller siden i enhver tilstand
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+weak until = 
+\series default
+Q må ikke nødvendigvis inntreffe
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Det er 
+\series bold
+uendelig mange
+\series default
+ P-tilstander (i enhver oppførsel)
+\end_layout
+
+\begin_layout Itemize
+Kombinert egenskap: P er garantert oppnåelig 
+\series bold
+og
+\series default
+ stabil
+\end_layout
+
+\begin_layout Subsection
+Fairness og Justice
+\end_layout
+
+\begin_layout Subsubsection
+Fairness
+\end_layout
+
+\begin_layout Itemize
+dersom noe kan skje undelig ofte, vil det skje uendelig ofte (eller i hvertfall
+ minst en gang)
+\end_layout
+
+\begin_layout Itemize
+hvis en oppførsel har uendelig mange P-tilstander så må den også ha uendelig
+ mange Q-tilstander
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+eksempel: hvis det er uendelig mange tilstander hvor filosof 
+\series bold
+i
+\series default
+ holder en pinne, og den andre pinnen er på bordet, så må det også være
+ undelig mange tilstander hvor filosof 
+\series bold
+i
+\series default
+ spiser
+\end_layout
+
+\begin_layout Itemize
+eksempel: hvis 
+\series bold
+meldingen
+\series default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+INF3230
+\begin_inset Quotes erd
+\end_inset
+
+ er i tilstanden uendelig mange ganger, vil 
+\begin_inset Quotes eld
+\end_inset
+
+INF3230
+\begin_inset Quotes erd
+\end_inset
+
+ opptre i mottakerens buffer i uendelig manget tilstander
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Justice
+\end_layout
+
+\begin_layout Itemize
+hvis noe kan skje 
+\series bold
+kontinuerlig
+\series default
+ fra et gitt tidpunkt, så vil det skje (uendelig ofte)
+\end_layout
+
+\begin_layout Itemize
+hvis filosof 
+\series bold
+i
+\series default
+ sitter uendelig lenge med en pinne og den andre pinnen er tilgjengelig
+ kontinuerlig, da vil filosof 
+\series bold
+i
+\series default
+ før eller siden spise
+\end_layout
+
+\begin_layout Subsection
+Eksempler på egenskaper bygget opp av tilstands/aksjons-utsagn
+\end_layout
+
+\begin_layout Itemize
+Hvis (filosof 
+\series bold
+i
+\series default
+ har en pinne og den andre er ledig) uendelig ofte, så er også filosof 
+\series bold
+i
+\series default
+ uendelig ofte i en tilstand hvor han holder begge pinnene (og spiser)
+\end_layout
+
+\begin_layout Itemize
+Hvis filosof 
+\series bold
+i
+\series default
+ utfører regel grabFirst uendelig mange ganger, så må filosofen også utføre
+ regelen 
+\series bold
+grabSecond
+\series default
+ uendelig ofte
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sier ikke det samme
+\end_layout
+
+\begin_layout Itemize
+korrekt egenskap vanskelig/umulig å uttrykke med kun aksjonsutsagn
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Både tilstandsutsagn og aksjonsutsagn:
+\series default
+ hvis filosof 
+\series bold
+i
+\series default
+ holder en pinne og den andre er ledig (uendelig ofte), så vil filosof 
+\series bold
+i
+\series default
+ utføre regel grabSecond uendelig ofte
+\end_layout
+
+\begin_layout Itemize
+Hvis hjemmelaget scorer uendelig ofte, så vil også bortelaget score uendelig
+ ofte
+\end_layout
+
+\begin_layout Itemize
+Hjemmelaget kan ikke score mer enn tre ganger på rad (uten at bortelaget
+ scorer)
+\end_layout
+
+\begin_layout Itemize
+Virker vrient å uttrykke de to siste med tilstandsutsagn!
+\end_layout
+
+\begin_layout Subsection
+Atomære utsagn
+\end_layout
+
+\begin_layout Itemize
+Egenskapene P og Q kan selv være egenskaper
+\end_layout
+
+\begin_layout Itemize
+Hva er de 
+\series bold
+grunnleggende
+\series default
+ byggestenene for P og Q?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+tilstandsutsagn
+\series default
+, som kan defineres av en funksjon
+\end_layout
+
+\begin_layout Itemize
+op p : State -> Bool .
+\end_layout
+
+\begin_layout Itemize
+hvor State er sorten til 
+\begin_inset Quotes eld
+\end_inset
+
+tilstandene
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+aksjonsutsagn 
+\series default
+på formen 
+\begin_inset Quotes eld
+\end_inset
+
+filosof 
+\series bold
+i
+\series default
+ utfører regel 
+\series bold
+l
+\series default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsubsection
+Sentralt spørsmål
+\end_layout
+
+\begin_layout Itemize
+Tilfredsstiller systemet (representert av modellen) M egenskapen/kravet
+ P?
+\end_layout
+
+\begin_layout Itemize
+Tilfredsstiller den siste varianten av spisende filosofer kravet 
+\begin_inset Quotes eld
+\end_inset
+
+filosof 3 får spist mer enn 20 ganger
+\begin_inset Quotes erd
+\end_inset
+
+?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+kommer an på initialtilstanden!
+\end_layout
+
+\begin_layout Itemize
+hvis initialtilstanden har 2 filosofter: neppe
+\end_layout
+
+\begin_layout Itemize
+hvis initialtilstanden ikke har noen pinner: neppe
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Sentralt spørsmål:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+holder egenskapen 
+\series bold
+P
+\series default
+ i modellen/systemet 
+\series bold
+M
+\series default
+ når vi starter med initialtilstand 
+\series bold
+t0
+\series default
+?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+skrives ofte 
+\series bold
+M, t0 |= P
+\end_layout
+
+\begin_layout Itemize
+kalles ofte 
+\series bold
+modelsjekkingsproblemet
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Modelsjekking
+\end_layout
+
+\begin_layout Itemize
+For å resonnere om hvorvidt et system M tilfredsstiller et krav P:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+M, t0 |= P
+\end_layout
+
+\begin_layout Itemize
+må vi:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+beskrive P presist/formelt
+\end_layout
+
+\begin_layout Enumerate
+definere nøyaktig hva 
+\series bold
+M, t0 |= P 
+\series default
+betyr
+\end_layout
+
+\begin_layout Enumerate
+ha matematiske måter å resonnere om 
+\series bold
+M, t0 |= P
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Subsection
+Oppførsel
+\end_layout
+
+\begin_layout Itemize
+For 
+\series bold
+enkelhets 
+\series default
+skyld antar vi i resten av forelesningene at enhver oppførsel fra en initialtils
+tand 
+\series bold
+t0
+\series default
+ er en 
+\series bold
+uendelig
+\series default
+ sekvens:
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+En oppførsel fra 
+\series bold
+t0
+\series default
+ er en 
+\series bold
+uendelig
+\series default
+ sekvens
+\end_layout
+
+\begin_layout Plain Layout
+t0 -> t1 -> t2 -> ...
+\end_layout
+
+\begin_layout Plain Layout
+av (sekvensielle) 
+\series bold
+ett-stegs-omskrivinger
+\series default
+ ti -> ti+1
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Definisjon (oppførsel)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+utelukker 
+\series bold
+uendelige
+\series default
+ oppførsler
+\end_layout
+
+\begin_layout Itemize
+konkret i Maude: legger til en omskrivning tk -> tk for alle termer tk (av
+ passende sort) som ikke kan omskrives
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+kun
+\series default
+ for å slippe å definere semnatikken flere ganger
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+Dersom pie er en oppførsel t0 -> t1 -> t2 -> ...
+ så definerer vi
+\end_layout
+
+\begin_layout Itemize
+pie(k) = tk (element nummer k i sekvensen)
+\end_layout
+
+\begin_layout Itemize
+pie
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+k
+\end_layout
+
+\end_inset
+
+ = tk -> tk+1 -> tk+2 -> ...
+ (resten av oppførselen fra posisjon k)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Definisjon (
+\begin_inset Quotes eld
+\end_inset
+
+Sub-oppførsel
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Temporallogikk
+\end_layout
+
+\begin_layout Subsection
+Globale egenskaper
+\end_layout
+
+\end_body
+\end_document

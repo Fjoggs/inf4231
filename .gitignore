@@ -1,2 +1,7 @@
 *.swp
 *.maude~
+*.lyx#
+*.lyx~
+*.txt~
+.gitignore~
+

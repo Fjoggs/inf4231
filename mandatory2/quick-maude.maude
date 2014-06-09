@@ -1,0 +1,10 @@
+fmod TEST is
+    sort S .
+    ops a b : -> S .
+    op f : S -> S .
+
+    var x : S .
+
+    eq f(f(x)) = x .
+    eq f(a) = b .
+endfm
