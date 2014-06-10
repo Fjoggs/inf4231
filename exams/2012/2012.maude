@@ -1,0 +1,36 @@
+fmod 2012 is
+    sort Bit .
+    ops 0 1 : -> Bit [ctor] .
+
+    sort Bits .
+    op e : -> Bits [ctor] .
+    op __ : Bits Bit -> Bits [ctor] .
+
+    op neg : Bits -> Bits .
+    op inverse : Bit -> Bit .
+
+    var K K2 : Bit .
+    var B B2 : Bits .
+
+    eq neg(e) = e .
+    eq neg(B 0) = neg(B) 1 .
+    eq neg(B 1) = neg(B) 0 .
+
+    op _xor_ : Bits Bits -> Bits .
+
+    eq e xor e = e .
+    eq (B K) xor (B2 K) = (B xor B2) 0 .
+    eq (B K) xor (B2 K2) = (B xor B2) 1 .
+
+    op concat : Bits Bits -> Bits .
+
+    eq concat(B, e) = B .
+    eq concat(B, B2 K) = concat(B, B2) K .
+
+    op sort : Bits -> Bits .
+
+    eq sort(e) = e . 
+    ceq sort(B K K2) = sort(B) K K2 if K = 0 .
+    ceq sort(B K K2) = sort(B) K2 K if K2 = 0  .
+
+endfm
